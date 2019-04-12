@@ -59,4 +59,5 @@ class MemberActivationForm(forms.ModelForm):
             raise ValidationError('Activation Code is incorrect')
         else:
             self.user.user.is_active = True
+            self.user.user.save()
         return self.cleaned_data['code']

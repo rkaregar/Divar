@@ -50,38 +50,22 @@
                     </form>
                 </div>
             </div>
-            <div class="card-body" align="center">
-
-                {% if form.errors %}
-                    <div class="alert alert-danger alert-dismissible fade show" role="alert" id="form_errors">
-                        <ul>
-                            <strong>خطاهای زیر پیش آمده:</strong>
-                            {{ form.non_field_errors }}
-                            {% for field in form %}
-                                {% if field.errors %}
-                                    <li>{{ field.label }}: {{ field.errors|striptags }}</li>{% endif %}
-                            {% endfor %}
-                        </ul>
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                {% endif %}
-                {% if errors %}
-                    <div class="alert alert-danger alert-dismissible fade show" role="alert" id="custom_errors">
-                        <ul>
-                            {% for key, value in errors.items %}
-                                <strong>خطاهای زیر پیش آمده:</strong>
-                                <li>{{ key }}: sath1231 {{ value }}</li>
-                            {% endfor %}
-                        </ul>
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                {% endif %}
-            </div>
         </div>
+        {% if form.errors %}
+            <div class="alert alert-danger alert-dismissible fade show" role="alert" id="form_errors" align="center" style="margin-top: 20px">
+                <ul>
+                    <strong>خطاهای زیر پیش آمده:</strong>
+                    {{ form.non_field_errors }}
+                    {% for field in form %}
+                        {% if field.errors %}
+                            <li>{{ field.label }}: {{ field.errors|striptags }}</li>{% endif %}
+                    {% endfor %}
+                </ul>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        {% endif %}
     </div>
     {#  <form method="post">#}
     {#        {% csrf_token %}#}
