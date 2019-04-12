@@ -10,7 +10,7 @@
 
 <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark fixed-top">
   <div class="container">
-    <a class="navbar-brand" href="/homepage">دیوار</a>
+    <a class="navbar-brand" href="{% url 'ads:home' %}">دیوار</a>
     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
             data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
             aria-label="Toggle navigation">
@@ -19,7 +19,7 @@
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
-          <a class="nav-link" href="/about" id="about">دربارهٔ ما</a>
+{#          <a class="nav-link" href="/about" id="about">دربارهٔ ما</a>#}
         </li>
 {#        <li class="nav-item">#}
 {#          <a class="nav-link" href="/services" id="services">سرویس‌ها</a>#}
@@ -83,7 +83,7 @@
                  style="padding-left: 18px">
 {#              <a class="dropdown-item" href="/user_panel">پنل کاربری</a>#}
 {#              <a class="dropdown-item" href="/edit_profile">تغییر مشخصات</a>#}
-              <a class="dropdown-item" href="/change_password">تغییر رمز عبور</a>
+              <a class="dropdown-item" href="{% url 'users:change-password' %}">تغییر رمز عبور</a>
 {#              <a class="dropdown-item" href="/add_credit">افزایش اعتبار</a>#}
 {#              <a class="dropdown-item" href="/withdraw_credit">برداشت پول از اعتبار</a>#}
 {#              <a class="dropdown-item" href="/anonymous_transfer">پرداخت ناشناس</a>#}
