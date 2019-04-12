@@ -1,3 +1,4 @@
+# Source: https://github.com/jpadilla/django-project-template/blob/master/.gitignore
 # Created by https://www.gitignore.io
 
 ### OSX ###
@@ -90,3 +91,4 @@ db.sqlite3
 
 
 .idea/
+venv/
