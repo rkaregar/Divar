@@ -28,7 +28,9 @@ class MemberCreationForm(UserCreationForm):
                   fail_silently=True)
 
     def save(self, commit=True):
-        user = super().save()
+        user = super().save(commit=False)
+        user.is_active = False
+        user.save()
         # data = self.cleaned_data
         # user = User.objects.create(username=data['username'],
         #                            email=data['email'],
@@ -55,5 +57,6 @@ class MemberActivationForm(forms.ModelForm):
         activation_code_object = get_object_or_404(ActivationCode, member=self.user)
         if activation_code_object.code != self.cleaned_data['code']:
             raise ValidationError('Activation Code is incorrect')
-
-
+        else:
+            self.user.user.is_active = True
+        return self.cleaned_data['code']
