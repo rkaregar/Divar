@@ -17,18 +17,16 @@
 {#<body dir="rtl" style=" height: 45px; background: linear-gradient(to right, #00ffff, #006666);padding-top: 50px;">#}
 {#background-image: url("https://pasteboard.co/images/HB4ixj1.jpg/download"); background-repeat:no-repeat;#}
 {#background-size:130%;#}
-<body dir="rtl" style='height: 45px;'>
+<body dir="rtl">
 {% extends "header.html" %}
 
 
 {% block master_content %}
 
-  {#<div class="container mt-4" style=" box-shadow: 0 4px 8px 0 rgba(0,0,0,0.3);#}
-  {#transition: 0.3s;#}
-  {#background-color: rgba(255, 255, 255,0.5);#}
-  {#border-radius: 5px;padding-top: 10px">#}
-  {% block content %}{% endblock %}
-  {#</div>#}
+  <div class="container" style="margin-top: 20px;">
+      {% block content %}{% endblock %}
+  </div>
+
 
 {% endblock %}
 
