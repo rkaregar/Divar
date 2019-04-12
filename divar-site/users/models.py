@@ -6,7 +6,7 @@ from django.db.models.deletion import CASCADE
 
 
 class Member(models.Model):
-    user = models.ForeignKey(to=User, on_delete=CASCADE)
+    user = models.OneToOneField(to=User, on_delete=CASCADE, related_name='member')
     phone_number = models.CharField(max_length=12)
 
     @property
