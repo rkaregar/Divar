@@ -1,147 +1,145 @@
 {% extends "master.html" %}
 
 {% block content %}
-  <header>
-    <div id="carousel" class="carousel slide" data-ride="carousel">
-      <ol class="carousel-indicators">
-        <li data-target="#carousel" data-slide-to="0" class="active"></li>
-        <li data-target="#carousel" data-slide-to="1"></li>
-        <li data-target="#carousel" data-slide-to="2"></li>
-      </ol>
-      <div class="carousel-inner" role="listbox">
-        <!-- Slide One - Set the background image for this slide in the line below -->
-        <div class="carousel-item active" style="background-image: url('/static/images/exam.jpg')">
-          <div class="carousel-caption d-none d-md-block">
-            <h3>خرید سرویس</h3>
-            <p>در این جا می‌توانید تافل بخرید.</p>
-          </div>
-        </div>
-        <!-- Slide Two - Set the background image for this slide in the line below -->
-        <div class="carousel-item" style="background-image: url('/static/images/uni.jpg')">
-          <div class="carousel-caption d-none d-md-block">
-            <h3>پول دانشگاه</h3>
-            <p>می‌توانید پول دانشگاه بدهید.</p>
-          </div>
-        </div>
-        <!-- Slide Three - Set the background image for this slide in the line below -->
-        <div class="carousel-item" style="background-image: url('/static/images/currency.jpg')">
-          <div class="carousel-caption d-none d-md-block">
-            <h3>نرخ تبدیل</h3>
-            <p>می‌توانید نرخ تبدیل دلار و یورو و پوند را ببینید.</p>
-          </div>
-        </div>
-      </div>
-      <a class="carousel-control-prev" href="#carousel" role="button" data-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="sr-only">Previous</span>
-      </a>
-      <a class="carousel-control-next" href="#carousel" role="button" data-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="sr-only">Next</span>
-      </a>
-    </div>
-  </header>
+{#  <header>#}
+{#    <div id="carousel" class="carousel slide" data-ride="carousel">#}
+{#      <ol class="carousel-indicators">#}
+{#        <li data-target="#carousel" data-slide-to="0" class="active"></li>#}
+{#        <li data-target="#carousel" data-slide-to="1"></li>#}
+{#        <li data-target="#carousel" data-slide-to="2"></li>#}
+{#      </ol>#}
+{#      <div class="carousel-inner" role="listbox">#}
+{#        <!-- Slide One - Set the background image for this slide in the line below -->#}
+{#        <div class="carousel-item active" style="background-image: url('/static/images/exam.jpg')">#}
+{#          <div class="carousel-caption d-none d-md-block">#}
+{#            <h3>خرید سرویس</h3>#}
+{#            <p>در این جا می‌توانید تافل بخرید.</p>#}
+{#          </div>#}
+{#        </div>#}
+{#        <!-- Slide Two - Set the background image for this slide in the line below -->#}
+{#        <div class="carousel-item" style="background-image: url('/static/images/uni.jpg')">#}
+{#          <div class="carousel-caption d-none d-md-block">#}
+{#            <h3>پول دانشگاه</h3>#}
+{#            <p>می‌توانید پول دانشگاه بدهید.</p>#}
+{#          </div>#}
+{#        </div>#}
+{#        <!-- Slide Three - Set the background image for this slide in the line below -->#}
+{#        <div class="carousel-item" style="background-image: url('/static/images/currency.jpg')">#}
+{#          <div class="carousel-caption d-none d-md-block">#}
+{#            <h3>نرخ تبدیل</h3>#}
+{#            <p>می‌توانید نرخ تبدیل دلار و یورو و پوند را ببینید.</p>#}
+{#          </div>#}
+{#        </div>#}
+{#      </div>#}
+{#      <a class="carousel-control-prev" href="#carousel" role="button" data-slide="prev">#}
+{#        <span class="carousel-control-prev-icon" aria-hidden="true"></span>#}
+{#        <span class="sr-only">Previous</span>#}
+{#      </a>#}
+{#      <a class="carousel-control-next" href="#carousel" role="button" data-slide="next">#}
+{#        <span class="carousel-control-next-icon" aria-hidden="true"></span>#}
+{#        <span class="sr-only">Next</span>#}
+{#      </a>#}
+{#    </div>#}
+{#  </header>#}
 
 
   <div class="container" align="right" id="features">
 
-    <h1 class="my-4">خدمات ما</h1>
-
-    <!-- Marketing Icons Section -->
-    <div class="row">
-      <div class="col-lg-4 mb-4">
-        <div class="card h-100">
-          <h4 class="card-header">سرویس‌های گوناگون</h4>
-          <div class="card-body">
-            <p class="card-text">کیا پرداخت امکان انجام تراکنش‌های مختلف را برای شما ممکن می‌کند. تنها کافیست سرویس مورد
-              نظر خود را انتخاب کرده و وارد کردن اطلاعات و پرداخت هزینه به ریال را انجام دهید.</p>
-          </div>
-          <div class="card-footer">
-            <a href="/services" class="btn btn-primary">اطلاعات بیشتر</a>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-4 mb-4">
-        <div class="card h-100">
-          <h4 class="card-header">قیمت ارز و تبدیل واحد</h4>
-          <div class="card-body">
-            <p class="card-text">شما می‌توانید به راحتی نرخ تبدیل ارزهای مختلف را مشاهده کرده و همچنین از ابزار تبدیل
-              واحد لحظه‌ای ما استفاده کنید.</p>
-          </div>
-          <div class="card-footer">
-            <a href="/currency_rates" class="btn btn-primary">اطلاعات بیشتر</a>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-4 mb-4">
-        <div class="card h-100">
-          <h4 class="card-header">ارتباط با مدیر</h4>
-          <div class="card-body">
-            <p class="card-text">این امکان برای شما فراهم شده که در هر لحظه از شبانه روز به راحتی با مدیر سایت در تماس
-              بوده و سوالات و پیشنهادات خود را با وی در میان بگذارید.</p>
-          </div>
-          <div class="card-footer">
-            <a href="/contact_us" class="btn btn-primary">اطلاعات بیشتر</a>
-          </div>
-        </div>
-      </div>
-    </div>
+{#    <h1 class="my-4">خدمات ما</h1>#}
+{##}
+{#    <!-- Marketing Icons Section -->#}
+{#    <div class="row">#}
+{#      <div class="col-lg-4 mb-4">#}
+{#        <div class="card h-100">#}
+{#          <h4 class="card-header">سرویس‌های گوناگون</h4>#}
+{#          <div class="card-body">#}
+{#            <p class="card-text">کیا پرداخت امکان انجام تراکنش‌های مختلف را برای شما ممکن می‌کند. تنها کافیست سرویس مورد#}
+{#              نظر خود را انتخاب کرده و وارد کردن اطلاعات و پرداخت هزینه به ریال را انجام دهید.</p>#}
+{#          </div>#}
+{#          <div class="card-footer">#}
+{#            <a href="/services" class="btn btn-primary">اطلاعات بیشتر</a>#}
+{#          </div>#}
+{#        </div>#}
+{#      </div>#}
+{#      <div class="col-lg-4 mb-4">#}
+{#        <div class="card h-100">#}
+{#          <h4 class="card-header">قیمت ارز و تبدیل واحد</h4>#}
+{#          <div class="card-body">#}
+{#            <p class="card-text">شما می‌توانید به راحتی نرخ تبدیل ارزهای مختلف را مشاهده کرده و همچنین از ابزار تبدیل#}
+{#              واحد لحظه‌ای ما استفاده کنید.</p>#}
+{#          </div>#}
+{#          <div class="card-footer">#}
+{#            <a href="/currency_rates" class="btn btn-primary">اطلاعات بیشتر</a>#}
+{#          </div>#}
+{#        </div>#}
+{#      </div>#}
+{#      <div class="col-lg-4 mb-4">#}
+{#        <div class="card h-100">#}
+{#          <h4 class="card-header">ارتباط با مدیر</h4>#}
+{#          <div class="card-body">#}
+{#            <p class="card-text">این امکان برای شما فراهم شده که در هر لحظه از شبانه روز به راحتی با مدیر سایت در تماس#}
+{#              بوده و سوالات و پیشنهادات خود را با وی در میان بگذارید.</p>#}
+{#          </div>#}
+{#          <div class="card-footer">#}
+{#            <a href="/contact_us" class="btn btn-primary">اطلاعات بیشتر</a>#}
+{#          </div>#}
+{#        </div>#}
+{#      </div>#}
+{#    </div>#}
     <!-- /.row -->
 
     <!-- Portfolio Section -->
-    <h2 id="services">برخی از سرویس‌ها</h2>
-
-    {% for service in services %}
-      {% if forloop.counter0 < 3 %}
-        {% if forloop.counter0|divisibleby:3 %}
+{#    <h2 id="services">برخی از سرویس‌ها</h2>#}
+{##}
+{#    {% for service in services %}#}
+{#      {% if forloop.counter0 < 3 %}#}
+{#        {% if forloop.counter0|divisibleby:3 %}#}
           {#            <div class="row" align="center">#}
-          <div class="row">
-        {% endif %}
-
-      <div class="col-lg-4 col-sm-6 portfolio-item">
-        <div class="card h-100">
-          <a href="{{ service.name }}"><img style="width: 100%; height: 200px;" class="card-img-top"
-                                            src="{{ service.image_url }}" alt=""></a>
-          <div class="card-body">
-            <h4 class="card-title">
-              <a href="/services/{{ service.name }}">خرید</a>
-            </h4>
-            <p class="card-text">{{ service.label }}</p>
-          </div>
-        </div>
-      </div>
-      {% if forloop.counter0|add:1|divisibleby:3 or forloop.counter == services|length %}
-        </div>
-      {% endif %}
-
-      {% endif %}
-
-    {% endfor %}
-
-    <br>
-    <hr>
-    <br>
+{#          <div class="row">#}
+{#        {% endif %}#}
+{##}
+{#      <div class="col-lg-4 col-sm-6 portfolio-item">#}
+{#        <div class="card h-100">#}
+{#          <a href="{{ service.name }}"><img style="width: 100%; height: 200px;" class="card-img-top"#}
+{#                                            src="{{ service.image_url }}" alt=""></a>#}
+{#          <div class="card-body">#}
+{#            <h4 class="card-title">#}
+{#              <a href="/services/{{ service.name }}">خرید</a>#}
+{#            </h4>#}
+{#            <p class="card-text">{{ service.label }}</p>#}
+{#          </div>#}
+{#        </div>#}
+{#      </div>#}
+{#      {% if forloop.counter0|add:1|divisibleby:3 or forloop.counter == services|length %}#}
+{#        </div>#}
+{#      {% endif %}#}
+{##}
+{#      {% endif %}#}
+{##}
+{#    {% endfor %}#}
+{##}
+{#    <br>#}
+{#    <hr>#}
+{#    <br>#}
 
 
     <!-- Features Section -->
     <div class="row" id="properties">
       <div class="col-lg-6">
         <h2>ویژگی‌های سامانهٔ ما</h2>
-        <p>ویژگی‌های زیر سامانهٔ کیا پرداخت را یکتا می‌کند:</p>
+        <p>ویژگی‌های زیر سامانهٔ دیوار را یکتا می‌کند:</p>
         <ul>
           <li>
-            تنوع بالای سرویس‌های ارائه شده
+            فروش کالاها
           </li>
-          <li>تیم جوان و فعال</li>
-          <li>سادگی استفاده</li>
-          <li>پشتیبانی بالا</li>
-          <li>امنیت و حفظ حریم خصوصی کاربران</li>
+          <li>خرید کالاها</li>
+          <li>تغییر رمز عبور</li>
         </ul>
-        <p>ما در کیا پرداخت تلاش می‌کنیم خدمات خود را به نحوی ارائه کنیم که علاوه بر پاسخگویی به نیاز شما،‌ رضایت و
+        <p>ما در دیوار تلاش می‌کنیم خدمات خود را به نحوی ارائه کنیم که علاوه بر پاسخگویی به نیاز شما،‌ رضایت و
           آرامش شما را نیز در بر داشته باشد.</p>
       </div>
       <div class="col-lg-6">
-        <img class="img-fluid rounded" style="width: 700px; height: 300px;" src="/static/images/payment2.jpg" alt="">
+        <img class="img-fluid rounded" style="width: 700px; height: 300px;" src="/static/images/divar.png" alt="">
       </div>
     </div>
     <!-- /.row -->
