@@ -10,17 +10,13 @@
                     <div class="card-body" align="center">
                         <form method="POST">
                             {% csrf_token %}
-                            {#                                          @include('Admin.section.errors')#}
                             <div class="form-group row">
                                 <label for="username" class="col-sm-4 col-form-label text-md-right">کد تایید</label>
-
                                 <div class="col-md-6">
                                     <input id="username" type="text" class="form-control" name="code"
                                            required autofocus
                                            oninvalid="this.setCustomValidity('لطفا فیلد را وارد کنید')"
                                            oninput="setCustomValidity('')">
-
-
                                 </div>
                             </div>
 
