@@ -1,0 +1,104 @@
+{% extends "master.html" %}
+
+{% block content %}
+
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <a href="/">همهٔ آگهی‌ها</a>
+    </li>
+  
+    {% for cat in categories %}
+      <li class="breadcrumb-item">
+        <a href="/">cat</a>
+      </li>
+    {% endfor %}
+
+    {#    <li class="breadcrumb-item active">دربارهٔ ما</li>#}
+  </ol>
+
+  <div class="container" align="right" id="features">
+    <div class="row" id="properties">
+      <div class="col-lg-5">
+        <h2>اسم آگهی</h2>
+        <p>زمان گذاشته شدن</p>
+
+        <table class="table">
+          <tbody>
+          {% for row in rows %}
+            <tr>
+              <td>{{ row }}</td>
+              <td>{{ row }}</td>
+            </tr>
+          {% endfor %}
+
+          <tr>
+            <td>کالا</td>
+            <td>خوب</td>
+          </tr>
+          <tr>
+            <td>زیبا</td>
+            <td>کیفیت</td>
+          </tr>
+          </tbody>
+        </table>
+
+        <p>توضیح آگهی</p>
+
+      </div>
+
+      <div class="col-lg-1">
+      </div>
+
+      <div class="col-lg-6">
+
+
+        <div id="carousel" class="carousel slide" data-ride="carousel">
+          {#          This is optional, just for aesthetics#}
+          <ol class="carousel-indicators">
+            {% for img in images %}
+              {% if forloop.counter == 1 %}
+                <li data-target="#carousel" data-slide-to={{ forloop.counter0 }} class="active"></li>
+              {% else %}
+                <li data-target="#carousel" data-slide-to={{ forloop.counter0 }}></li>
+              {% endif %}
+              {#              <li data-target="#carousel" data-slide-to={{ forloop.counter0 }}></li>#}
+            {% endfor %}
+
+            <li data-target="#carousel" data-slide-to="0" class="active"></li>
+            <li data-target="#carousel" data-slide-to="1"></li>
+            <li data-target="#carousel" data-slide-to="2"></li>
+          </ol>
+
+          {% for img in images %}
+            <div class="carousel-item active" style="background-image: url({{ img }})">
+            </div>
+          {% endfor %}
+
+          <div class="carousel-inner" role="listbox">
+            <div class="carousel-item active" style="background-image: url('/static/images/exam.jpg')">
+            </div>
+            <div class="carousel-item" style="background-image: url('/static/images/uni.jpg')">
+            </div>
+            <div class="carousel-item" style="background-image: url('/static/images/currency.jpg')">
+            </div>
+          </div>
+
+          <a class="carousel-control-prev" href="#carousel" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+          </a>
+          <a class="carousel-control-next" href="#carousel" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+          </a>
+        </div>
+
+
+      </div>
+    </div>
+
+    <hr>
+
+
+  </div>
+{% endblock content %}
