@@ -1,21 +1,41 @@
 from django.shortcuts import render
 
 # Create your views here.
-from django.shortcuts import get_object_or_404
-from django.views.generic import TemplateView, FormView
+from django.views.generic import TemplateView, CreateView
 from ads.forms import AdvertisementCreationForm
-from users.models import Member
+from django.shortcuts import get_object_or_404
+from ads.models import Advertisement
 
 class HomeView(TemplateView):
     template_name = 'homepage.html'
 
 
-class AdvertisementCreationView(FormView):
+class AdvertisementCreationView(CreateView):
     form_class = AdvertisementCreationForm
     success_url = '/'
-    template_name = 'advertisement_creation.html'
+    template_name = 'create_ad.html'
     def get_form_kwargs(self):
         return {**super().get_form_kwargs(), **{'user': self.get_object()}}
 
-    def get_object(self):
-        return get_object_or_404(Member, user__username=self.request.user)
+    def get_object(self, queryset=None):
+        return self.request.user.member
+
+
+class AdvertisementViewView(TemplateView):
+    template_name = 'view_ad.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        advertisement_id = self.kwargs['id']
+        advertisement = get_object_or_404(Advertisement, id=advertisement_id)
+        context['title'] = advertisement.title
+        context['price'] = advertisement.price
+        context['description'] = advertisement.description
+        context['city'] = advertisement.city
+        context['creation_time'] = advertisement.creation_time
+        context['is_urgent'] = advertisement.is_urgent
+        context['category'] = advertisement.category.title
+        context['user_phone'] = advertisement.user.phone_number
+        context['user_email'] = advertisement.user.email
+        context['sharable_link'] = 'view/' + str(id)
+        return context
