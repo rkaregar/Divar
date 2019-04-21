@@ -13,7 +13,7 @@ class HomeView(TemplateView):
 class AdvertisementCreationView(CreateView):
     form_class = AdvertisementCreationForm
     success_url = '/'
-    template_name = 'advertisement_creation.html'
+    template_name = 'create_ad.html'
     def get_form_kwargs(self):
         return {**super().get_form_kwargs(), **{'user': self.get_object()}}
 
