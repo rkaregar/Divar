@@ -1,20 +1,3 @@
-{#{% extends "admin/base_site.html" %}#}
-{#{% load i18n %}#}
-{#{% block userlinks %}{% url 'django-admindocs-docroot' as docsroot %}{% if docsroot %}<a href="{{ docsroot }}">{% trans 'Documentation' %}</a> / {% endif %}{% trans 'Change password' %} / <a href="{% url 'admin:logout' %}">{% trans 'Log out' %}</a>{% endblock %}#}
-{#{% block breadcrumbs %}#}
-{#<div class="breadcrumbs">#}
-{#<a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>#}
-{#&rsaquo; {% trans 'Password change' %}#}
-{#</div>#}
-{#{% endblock %}#}
-{##}
-{#{% block title %}{{ title }}{% endblock %}#}
-{#{% block content_title %}<h1>{{ title }}</h1>{% endblock %}#}
-{#{% block content %}#}
-{#<p>{% trans 'Your password was changed.' %}</p>#}
-{#{% endblock %}#}
-
-
 {% extends "master.html" %}
 
 {% block content %}
@@ -31,7 +14,8 @@
 {#        <a href="/edit_profile" class="list-group-item list-group-item-action">ویرایش پروفایل</a>#}
         <a href="{% url 'users:change-password'%}" class="list-group-item list-group-item-action active">تغییر رمز عبور</a>
         <a href="{% url 'users:edit-profile'%}" class="list-group-item list-group-item-action active">تغییر شماره تلفن</a>
-{#        <a href="/add_credit" class="list-group-item list-group-item-action">اضافه کردن اعتبار</a>#}
+
+          {#        <a href="/add_credit" class="list-group-item list-group-item-action">اضافه کردن اعتبار</a>#}
 {#        <a href="/withdraw_credit" class="list-group-item list-group-item-action">برداشت پول از اعتبار</a>#}
 {#        <a href="/anonymous_transfer" class="list-group-item list-group-item-action">واریز مخفیانهٔ پول</a>#}
 {#        <a href="/transactions" class="list-group-item list-group-item-action">تاریخچهٔ تراکنش‌ها</a>#}
@@ -70,48 +54,29 @@
       {% endif %}
 
 
-      <div class="form-group row" align="right">
-        <h3 class="col-sm-6">رمز عبور شما با موفقیت تغییر کرد</h3>
-      </div>
+      <form method="post">
+        {% csrf_token %}
+        <div class="form-group row" align="right">
+          <h3 class="col-sm-6">تغییر شماره تلفن</h3>
+        </div>
 
-{#      <form method="post">#}
-{#        {% csrf_token %}#}
-{##}
-{##}
-{#        <div class="form-group row">#}
-{#          <label for="inputPassword" class="col-sm-2 col-form-label">رمز عبور قبلی</label>#}
-{#          <div class="col-sm-7">#}
-{#            <input type="password" class="form-control" id="old_password" name="old_password"#}
-{#                   placeholder="Password" dir="ltr">#}
-{#          </div>#}
-{#        </div>#}
-{##}
-{#        <div class="form-group row">#}
-{#          <label for="inputPassword" class="col-sm-2 col-form-label">رمز عبور جدید</label>#}
-{#          <div class="col-sm-7">#}
-{#            <input type="password" class="form-control" id="new_password" name="new_password1"#}
-{#                   placeholder="New Password" dir="ltr">#}
-{#          </div>#}
-{#        </div>#}
-{#        <div class="form-group row">#}
-{#          <label for="inputPassword" class="col-sm-2 col-form-label">تکرار رمز عبور جدید</label>#}
-{#          <div class="col-sm-7">#}
-{#            <input type="password" class="form-control" id="new_password_confirmation"#}
-{#                   name="new_password2" placeholder="Repeat New Password" dir="ltr">#}
-{#          </div>#}
-{#        </div>#}
-{##}
-{#        <div style="padding-left: 150px">#}
-{#          <button type="submit" class="btn btn-primary" name="submit_button">ثبت</button>#}
-{#        </div>#}
-{##}
-{#      </form>#}
+
+        <div class="form-group row">
+          <label for="phone_number" class="col-sm-2 col-form-label">شماره تلفن</label>
+          <div class="col-sm-7">
+            <input type="text" class="form-control" id="phone_number" name="phone_number" value="{{ form.phone_number.value }}" placeholder="" dir="ltr">
+          </div>
+        </div>
+
+        <div style="padding-left: 150px">
+          <button type="submit" class="btn btn-primary" name="submit_button">ثبت</button>
+        </div>
+
+      </form>
     </div>
 
   </div>
 
   <script src="/static/Translator.js"></script>
 {% endblock content %}
-
-
 
