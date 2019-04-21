@@ -2,47 +2,71 @@
 
 {% block content %}
 
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item">
-      <a href="/">همهٔ آگهی‌ها</a>
-    </li>
-  
-    {% for cat in categories %}
-      <li class="breadcrumb-item">
-        <a href="/">cat</a>
-      </li>
-    {% endfor %}
-
-    {#    <li class="breadcrumb-item active">دربارهٔ ما</li>#}
-  </ol>
+  {#  optional, navbar for aesthetics#}
+  {#  <ol class="breadcrumb">#}
+  {#    <li class="breadcrumb-item">#}
+  {#      <a href="/">همهٔ آگهی‌ها</a>#}
+  {#    </li>#}
+  {#  #}
+  {#    {% for cat in categories %}#}
+  {#      <li class="breadcrumb-item">#}
+  {#        <a href="/">cat</a>#}
+  {#      </li>#}
+  {#    {% endfor %}#}
+  {#  </ol>#}
 
   <div class="container" align="right" id="features">
     <div class="row" id="properties">
       <div class="col-lg-5">
-        <h2>اسم آگهی</h2>
-        <p>زمان گذاشته شدن</p>
+        <h2>{{ title }}</h2>
+        <p>{{ creation_time }}</p>
 
         <table class="table">
           <tbody>
-          {% for row in rows %}
-            <tr>
-              <td>{{ row }}</td>
-              <td>{{ row }}</td>
-            </tr>
-          {% endfor %}
+          {#          {% for row in rows %}#}
+          {#            <tr>#}
+          {#              <td>{{ row }}</td>#}
+          {#              <td>{{ row }}</td>#}
+          {#            </tr>#}
+          {#          {% endfor %}#}
 
           <tr>
-            <td>کالا</td>
-            <td>خوب</td>
+            <td>قیمت</td>
+            <td>{{ price }}</td>
           </tr>
           <tr>
-            <td>زیبا</td>
-            <td>کیفیت</td>
+            <td>شهر</td>
+            <td>{{ city }}</td>
+          </tr>
+          <tr>
+            <td>فوری است؟</td>
+            {% if is_urgent %}
+              <td>بله</td>
+            {% else %}
+              <td>خیر</td>
+            {% endif %}
+            {#            <td>{{ is_urgent }}</td>#}
+          </tr>
+          <tr>
+            <td>دسته</td>
+            <td>{{ category }}</td>
+          </tr>
+          <tr>
+            <td>شماره تماس</td>
+            <td>{{ user_phone }}</td>
+          </tr>
+          <tr>
+            <td>ایمیل</td>
+            <td>{{ user_email }}</td>
+          </tr>
+          <tr>
+            <td>لینک</td>
+            <td>{{ sharable_link }}</td>
           </tr>
           </tbody>
         </table>
 
-        <p>توضیح آگهی</p>
+        <p>{{ description }}</p>
 
       </div>
 
