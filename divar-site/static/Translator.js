@@ -25,6 +25,38 @@ for (let i = 0; i < inputs.length; i++) {
         inputs[i].innerText = 'نقش:';
 }
 
+creationTime = document.getElementById("creation_time");
+
+creationTime.innerText = creationTime.innerText.replace(/0/g, '۰');
+creationTime.innerText = creationTime.innerText.replace(/1/g, '۱');
+creationTime.innerText = creationTime.innerText.replace(/2/g, '۲');
+creationTime.innerText = creationTime.innerText.replace(/3/g, '۳');
+creationTime.innerText = creationTime.innerText.replace(/4/g, '۴');
+creationTime.innerText = creationTime.innerText.replace(/5/g, '۵');
+creationTime.innerText = creationTime.innerText.replace(/6/g, '۶');
+creationTime.innerText = creationTime.innerText.replace(/7/g, '۷');
+creationTime.innerText = creationTime.innerText.replace(/8/g, '۸');
+creationTime.innerText = creationTime.innerText.replace(/9/g, '۹');
+
+creationTime.innerText = creationTime.innerText.replace("January", "جنیوئری");
+creationTime.innerText = creationTime.innerText.replace("February", "فبریه");
+creationTime.innerText = creationTime.innerText.replace("March", "مارچ");
+creationTime.innerText = creationTime.innerText.replace("April", "آپریل");
+creationTime.innerText = creationTime.innerText.replace("May", "می");
+creationTime.innerText = creationTime.innerText.replace("June", "جون");
+creationTime.innerText = creationTime.innerText.replace("July", "جولای");
+creationTime.innerText = creationTime.innerText.replace("August", "اسگت");
+creationTime.innerText = creationTime.innerText.replace("September", "سپتامبر");
+creationTime.innerText = creationTime.innerText.replace("October", "اکتبر");
+creationTime.innerText = creationTime.innerText.replace("November", "نوامبر");
+creationTime.innerText = creationTime.innerText.replace("December", "دسامبر");
+
+creationTime.innerText = creationTime.innerText.replace(",", "،");
+
+creationTime.innerText = creationTime.innerText.replace("a.m.", "صبح");
+creationTime.innerText = creationTime.innerText.replace("p.m.", "عصر");
+    // creationTime.innerText = 'به به';
+
 lis = document.getElementsByTagName('li');
 for (let i = 0; i < lis.length; i++) {
     if (lis[i].innerText.includes('Email: This field is req'))

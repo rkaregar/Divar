@@ -18,8 +18,17 @@
   <div class="container" align="right" id="features">
     <div class="row" id="properties">
       <div class="col-lg-5">
-        <h2>{{ title }}</h2>
-        <p>{{ creation_time }}</p>
+        {#        <div class="row"><h2>{{ title }}</h2>#}
+        {#          <span class="badge badge-danger">فوری</span></div>#}
+        <h2>{{ title }}
+          {% if is_urgent %}
+            <span class="badge badge-danger">فوری</span>
+          {% endif %}
+          <span class="badge badge-danger">فوری</span>
+        </h2>
+
+
+        <label id="creation_time">{{ creation_time }}</label>
 
         <table class="table">
           <tbody>
@@ -39,13 +48,6 @@
             <td>{{ city }}</td>
           </tr>
           <tr>
-            <td>فوری است؟</td>
-            {% if is_urgent %}
-              <td>بله</td>
-            {% else %}
-              <td>خیر</td>
-            {% endif %}
-            {#            <td>{{ is_urgent }}</td>#}
           </tr>
           <tr>
             <td>دسته</td>
@@ -88,22 +90,31 @@
               {#              <li data-target="#carousel" data-slide-to={{ forloop.counter0 }}></li>#}
             {% endfor %}
 
-            <li data-target="#carousel" data-slide-to="0" class="active"></li>
-            <li data-target="#carousel" data-slide-to="1"></li>
-            <li data-target="#carousel" data-slide-to="2"></li>
+            {#            <li data-target="#carousel" data-slide-to="0" class="active"></li>#}
+            {#            <li data-target="#carousel" data-slide-to="1"></li>#}
+            {#            <li data-target="#carousel" data-slide-to="2"></li>#}
           </ol>
 
-          {% for img in images %}
-            <div class="carousel-item active" style="background-image: url({{ img }})">
-            </div>
-          {% endfor %}
 
           <div class="carousel-inner" role="listbox">
-            <div class="carousel-item active" style="background-image: url('/static/images/exam.jpg')">
-            </div>
-            <div class="carousel-item" style="background-image: url('/static/images/uni.jpg')">
-            </div>
-            <div class="carousel-item" style="background-image: url('/static/images/currency.jpg')">
+            {% if images %}
+              {% for img in images %}
+                {% if forloop.counter0 == 0 %}
+                  <div class="carousel-item active" style="background-image: url({{ img }})">
+                {% else %}
+                  <div class="carousel-item" style="background-image: url({{ img }})">
+                {% endif %}
+              </div>
+              {% endfor %}
+
+            {% else %}
+              <div class="carousel-item active" style="background-image: url('/static/images/no_photo.png')">
+              </div>
+              {#              <div class="carousel-item" style="background-image: url('/static/images/uni.jpg')">#}
+              {#              </div>#}
+              {#              <div class="carousel-item" style="background-image: url('/static/images/currency.jpg')">#}
+            {% endif %}
+
             </div>
           </div>
 
@@ -125,4 +136,5 @@
 
 
   </div>
+  <script src="/static/Translator.js"></script>
 {% endblock content %}
