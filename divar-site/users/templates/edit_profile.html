@@ -13,7 +13,7 @@
 {#        <a href="/user_panel" class="list-group-item list-group-item-action">پنل کاربری</a>#}
 {#        <a href="/edit_profile" class="list-group-item list-group-item-action">ویرایش پروفایل</a>#}
         <a href="{% url 'users:change-password'%}" class="list-group-item list-group-item-action active">تغییر رمز عبور</a>
-        <a href="{% url 'users:edit-profile'%}" class="list-group-item list-group-item-action active">تغییر شماره تلفن</a>
+        <a href="{% url 'users:edit-profile'%}" class="list-group-item list-group-item-action active">ویرایش پروفایل</a>
 
           {#        <a href="/add_credit" class="list-group-item list-group-item-action">اضافه کردن اعتبار</a>#}
 {#        <a href="/withdraw_credit" class="list-group-item list-group-item-action">برداشت پول از اعتبار</a>#}
@@ -57,7 +57,7 @@
       <form method="post">
         {% csrf_token %}
         <div class="form-group row" align="right">
-          <h3 class="col-sm-6">تغییر شماره تلفن</h3>
+          <h3 class="col-sm-6">ویرایش پروفایل</h3>
         </div>
 
 
