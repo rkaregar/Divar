@@ -33,3 +33,8 @@ class Category(models.Model):
     title = models.CharField(max_length=12)
     level = models.IntegerField(choices=level_choices)
     parent = models.ForeignKey(to='self', on_delete=CASCADE, related_name='children', null=True)
+
+
+class Images(models.Model):
+    image = models.ImageField(upload_to='img', null=True)
+    advertisement = models.ForeignKey(to=Advertisement, on_delete=CASCADE, related_name='images')

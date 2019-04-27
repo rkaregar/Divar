@@ -1,6 +1,8 @@
 from django import forms
 from django.shortcuts import get_object_or_404
-from ads.models import Advertisement, Category
+from ads.models import Advertisement, Category, Images
+from django.forms import inlineformset_factory
+
 
 class AdvertisementCreationForm(forms.ModelForm):
     # category1 = forms.CharField(max_length=12)
@@ -37,4 +39,15 @@ class AdvertisementCreationForm(forms.ModelForm):
                                                      city=self.cleaned_data['city'],
                                                      # category=category,
                                                      user=self.user)
+
         return advertisement
+
+
+class ImagesCreationForm(forms.ModelForm):
+
+    class Meta:
+        model = Images
+        exclude = ()
+
+
+ImagesFormset = inlineformset_factory(parent_model=Advertisement, model=Images, form=ImagesCreationForm, extra=3)

@@ -2,20 +2,48 @@ from django.shortcuts import render
 
 # Create your views here.
 from django.views.generic import TemplateView, CreateView
-from ads.forms import AdvertisementCreationForm
+from ads.forms import AdvertisementCreationForm, ImagesFormset
 from django.shortcuts import get_object_or_404
 from ads.models import Advertisement
+from django.db import transaction
 
 class HomeView(TemplateView):
     template_name = 'homepage.html'
 
 
 class AdvertisementCreationView(CreateView):
+
+    model = Advertisement
     form_class = AdvertisementCreationForm
     success_url = '/'
     template_name = 'create_ad.html'
+
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+
+        if self.request.POST:
+            data['images'] = ImagesFormset(self.request.POST)
+        else:
+            data['images'] = ImagesFormset()
+
+        return data
+
+
     def get_form_kwargs(self):
         return {**super().get_form_kwargs(), **{'user': self.get_object()}}
+
+    def form_valid(self, form):
+        context = self.get_context_data()
+        images = context['images']
+
+        with transaction.atomic():
+            self.object = form.save()
+
+            if images.is_valid():
+                images.instance = self.object
+                images.save()
+
+        return super().form_valid(form)
 
     def get_object(self, queryset=None):
         return self.request.user.member
