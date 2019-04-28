@@ -23,6 +23,9 @@ class Advertisement(models.Model):
     user = models.ForeignKey(to=Member, on_delete=CASCADE, related_name='member')
     creation_time = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        return self.title
+
 
 class Category(models.Model):
     level_choices = (

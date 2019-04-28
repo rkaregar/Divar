@@ -2,6 +2,15 @@ from django.contrib import admin
 from ads.models import Category, Advertisement, Images
 # Register your models here.
 
-admin.site.register(Advertisement)
+
+class ImagesInline(admin.TabularInline):
+    model = Images
+    fields = ['image']
+
+
+class AdvertisementAdmin(admin.ModelAdmin):
+    inlines = [ImagesInline]
+
+admin.site.register(Advertisement, AdvertisementAdmin)
 admin.site.register(Category)
 admin.site.register(Images)

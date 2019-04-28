@@ -32,15 +32,16 @@ class AdvertisementCreationForm(forms.ModelForm):
         # else:
         #     category = get_object_or_404(Category, level=1, title=self.cleaned_data['category1'])
 
-        advertisement = Advertisement.objects.create(title=self.cleaned_data['title'],
-                                                     price=self.cleaned_data['price'],
-                                                     is_urgent=self.cleaned_data['is_urgent'],
-                                                     description=self.cleaned_data['description'],
-                                                     city=self.cleaned_data['city'],
-                                                     # category=category,
-                                                     user=self.user)
+        if commit:
+            self.instance = Advertisement.objects.create(title=self.cleaned_data['title'],
+                                                         price=self.cleaned_data['price'],
+                                                         is_urgent=self.cleaned_data['is_urgent'],
+                                                         description=self.cleaned_data['description'],
+                                                         city=self.cleaned_data['city'],
+                                                         # category=category,
+                                                         user=self.user)
 
-        return advertisement
+        return self.instance
 
 
 class ImagesCreationForm(forms.ModelForm):
@@ -50,4 +51,5 @@ class ImagesCreationForm(forms.ModelForm):
         exclude = ()
 
 
-ImagesFormset = inlineformset_factory(parent_model=Advertisement, model=Images, form=ImagesCreationForm, extra=3)
+ImagesFormset = inlineformset_factory(parent_model=Advertisement, model=Images, fields=('image',),
+                                      form=ImagesCreationForm, extra=3)

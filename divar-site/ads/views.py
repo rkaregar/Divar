@@ -22,7 +22,7 @@ class AdvertisementCreationView(CreateView):
         data = super().get_context_data(**kwargs)
 
         if self.request.POST:
-            data['images'] = ImagesFormset(self.request.POST)
+            data['images'] = ImagesFormset(self.request.POST, self.request.FILES)
         else:
             data['images'] = ImagesFormset()
 
@@ -36,14 +36,16 @@ class AdvertisementCreationView(CreateView):
         context = self.get_context_data()
         images = context['images']
 
+        ret = super().form_valid(form)
+
         with transaction.atomic():
-            self.object = form.save()
+            # self.object = form.save(commit=False)
 
             if images.is_valid():
                 images.instance = self.object
                 images.save()
 
-        return super().form_valid(form)
+        return ret
 
     def get_object(self, queryset=None):
         return self.request.user.member
