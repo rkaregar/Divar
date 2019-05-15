@@ -2,23 +2,23 @@
 
 {% block content %}
 
-    {#  optional, navbar for aesthetics#}
-    {#  <ol class="breadcrumb">#}
-    {#    <li class="breadcrumb-item">#}
-    {#      <a href="/">همهٔ آگهی‌ها</a>#}
-    {#    </li>#}
-    {#  #}
-    {#    {% for cat in categories %}#}
-    {#      <li class="breadcrumb-item">#}
-    {#        <a href="/">cat</a>#}
-    {#      </li>#}
-    {#    {% endfor %}#}
-    {#  </ol>#}
+  {#  optional, navbar for aesthetics#}
+  {#  <ol class="breadcrumb">#}
+  {#    <li class="breadcrumb-item">#}
+  {#      <a href="/">همهٔ آگهی‌ها</a>#}
+  {#    </li>#}
+  {#  #}
+  {#    {% for cat in categories %}#}
+  {#      <li class="breadcrumb-item">#}
+  {#        <a href="/">cat</a>#}
+  {#      </li>#}
+  {#    {% endfor %}#}
+  {#  </ol>#}
 
-    <div class="container" align="right" id="features">
-        <div class="row" id="properties">
-            <div class="col-lg-5">
-                <h2>{{ title }}
+  <div class="container" align="right" id="features">
+    <div class="row" id="properties">
+      <div class="col-lg-5">
+        <h2>{{ title }}
                     {% if is_urgent %}
                         <button type="button" class="btn btn-danger">فوری</button>
                     {% endif %}
@@ -38,10 +38,9 @@
                             },
                             dataType: 'json',
                             success: function () {
-                                if(target === 0) {
+                                if (target === 0) {
                                     $('#bookmark').removeClass("btn-primary").addClass("btn-outline-primary").text('نشان کردن');
-                                }
-                                else {
+                                } else {
                                     $('#bookmark').removeClass("btn-outline-primary").addClass("btn-primary").text('نشان شده');
                                 }
                                 $(this).attr("data-bookmark", target)
@@ -52,108 +51,104 @@
                 </script>
 
 
-                <label id="creation_time">{{ creation_time }}</label>
+        <label id="creation_time">{{ creation_time }}</label>
 
-                <table class="table">
-                    <tbody>
+        <table class="table">
+          <tbody>
 
-                    <tr>
-                        <td>قیمت</td>
-                        <td>{{ price }}</td>
-                    </tr>
-                    <tr>
-                        <td>شهر</td>
-                        <td>{{ city }}</td>
-                    </tr>
-                    <tr>
-                    </tr>
-                    <tr>
-                        <td>دسته</td>
-                        <td>{{ category }}</td>
-                    </tr>
-                    <tr>
-                        <td>شماره تماس</td>
-                        <td>{{ user_phone }}</td>
-                    </tr>
-                    <tr>
-                        <td>ایمیل</td>
-                        <td>{{ user_email }}</td>
-                    </tr>
-                    <tr>
-                        <td>لینک</td>
-                        <td>{{ sharable_link }}</td>
-                    </tr>
-                    </tbody>
-                </table>
+          <tr>
+            <td>قیمت</td>
+            <td>{{ price }}</td>
+          </tr>
+          <tr>
+            <td>شهر</td>
+            <td>{{ city }}</td>
+          </tr>
+          <tr>
+          </tr>
+          <tr>
+            <td>دسته</td>
+            <td>{{ category }}</td>
+          </tr>
+          <tr>
+            <td>شماره تماس</td>
+            <td>{{ user_phone }}</td>
+          </tr>
+          <tr>
+            <td>ایمیل</td>
+            <td>{{ user_email }}</td>
+          </tr>
+          <tr>
+            <td>لینک</td>
+            <td>{{ sharable_link }}</td>
+          </tr>
+          </tbody>
+        </table>
 
-                <p>{{ description }}</p>
+        <p>{{ description }}</p>
 
-            </div>
+      </div>
 
-            <div class="col-lg-1">
-            </div>
+      <div class="col-lg-1">
+      </div>
 
-            <div class="col-lg-6">
-
-
-                <div id="carousel" class="carousel slide" data-ride="carousel">
-                    {#          This is optional, just for aesthetics#}
-                    <ol class="carousel-indicators">
-                        {% for img in images %}
-                            {% if forloop.counter == 1 %}
-                                <li data-target="#carousel" data-slide-to={{ forloop.counter0 }} class="active"></li>
-                            {% else %}
-                                <li data-target="#carousel" data-slide-to={{ forloop.counter0 }}></li>
-                            {% endif %}
-                            {#              <li data-target="#carousel" data-slide-to={{ forloop.counter0 }}></li>#}
-                        {% endfor %}
-
-                        {#            <li data-target="#carousel" data-slide-to="0" class="active"></li>#}
-                        {#            <li data-target="#carousel" data-slide-to="1"></li>#}
-                        {#            <li data-target="#carousel" data-slide-to="2"></li>#}
-                    </ol>
+      <div class="col-lg-6">
 
 
-                    <div class="carousel-inner" role="listbox">
-                        {% if images %}
-                            {% for img in images %}
-                                {% if forloop.counter0 == 0 %}
-                                    <div class="carousel-item active" style="background-image: url({{ img }})">
-                                {% else %}
-                                    <div class="carousel-item" style="background-image: url({{ img }})">
-                                {% endif %}
-                            </div>
-                            {% endfor %}
+        <div id="carousel" class="carousel slide" data-ride="carousel">
+          {#          This is optional, just for aesthetics#}
+          <ol class="carousel-indicators">
+            {% for img in images %}
+              {% if forloop.counter == 1 %}
+                <li data-target="#carousel" data-slide-to={{ forloop.counter0 }} class="active"></li>
+              {% else %}
+                <li data-target="#carousel" data-slide-to={{ forloop.counter0 }}></li>
+              {% endif %}
+              {#              <li data-target="#carousel" data-slide-to={{ forloop.counter0 }}></li>#}
+            {% endfor %}
 
-                        {% else %}
-                            <div class="carousel-item active"
-                                 style="background-image: url('/static/images/no_photo.png')">
-                            </div>
-                            {#              <div class="carousel-item" style="background-image: url('/static/images/uni.jpg')">#}
-                            {#              </div>#}
-                            {#              <div class="carousel-item" style="background-image: url('/static/images/currency.jpg')">#}
-                        {% endif %}
+            {#            <li data-target="#carousel" data-slide-to="0" class="active"></li>#}
+            {#            <li data-target="#carousel" data-slide-to="1"></li>#}
+            {#            <li data-target="#carousel" data-slide-to="2"></li>#}
+          </ol>
 
-                        </div>
-                    </div>
 
-                    <a class="carousel-control-prev" href="#carousel" role="button" data-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Previous</span>
-                    </a>
-                    <a class="carousel-control-next" href="#carousel" role="button" data-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Next</span>
-                    </a>
-                </div>
+          <div class="carousel-inner" role="listbox">
+            {% if images %}
+              {% for img in images %}
+                {% if forloop.counter0 == 0 %}
+                  <div class="carousel-item active" style="background-image: url({{ img.image.url }})">
+                {% else %}
+                  <div class="carousel-item" style="background-image: url({{ img.image.url }})">
+                {% endif %}
+              </div>
+              {% endfor %}
 
+            {% else %}
+              <div class="carousel-item active" style="background-image: url('/static/images/no_photo.png')">
+              </div>
+            {% endif %}
 
             </div>
+          </div>
+
+          <a class="carousel-control-prev" href="#carousel" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+          </a>
+          <a class="carousel-control-next" href="#carousel" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+          </a>
         </div>
 
-        <hr>
 
-
+      </div>
     </div>
-    <script src="/static/Translator.js"></script>
+
+    <hr>
+
+
+  </div>
+  <script src="/static/Translator.js"></script>
 {% endblock content %}

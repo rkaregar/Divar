@@ -17,9 +17,16 @@ from django.contrib import admin
 from django.urls import path, include
 from django.views.generic.base import RedirectView
 
+from . import settings
+from django.contrib.staticfiles.urls import static
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+
 urlpatterns = [
     path('', RedirectView.as_view(url='/ads/'), name='home'),
     path('ads/', include(('ads.urls', 'ads'), namespace='ads')),
     path('admin/', admin.site.urls),
     path('users/', include(('users.urls', 'users'), namespace='users')),
 ]
+
+urlpatterns += staticfiles_urlpatterns()
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

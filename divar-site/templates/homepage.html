@@ -3,7 +3,7 @@
 {% block content %}
   <div class="container" align="right" id="features">
 
-    {% for s in ss %}
+    {% for ad in ads %}
       {% if forloop.counter0|divisibleby:4 %}
         <div class="row" align="center">
       {% endif %}
@@ -12,18 +12,18 @@
       <div class="col-lg-3 mb-3">
         <div class="card h-100">
 
-          {% if s.image %}
-            <a href="/ads/view/{{ s.id }}"><img class="card-img-top" src="{{ image }}" alt=""></a>
+          {% if ad.image %}
+            <a href="/ads/view/{{ ad.id }}"><img class="card-img-top" src="{{ ad.image.image.url }}" alt=""></a>
           {% else %}
-            <a href="/ads/view/{{ s.id }}"><img class="card-img-top" src="/static/images/no_photo.png" alt=""></a>
+            <a href="/ads/view/{{ ad.id }}"><img class="card-img-top" src="/static/images/no_photo.png" alt=""></a>
           {% endif %}
 
-          <h4 class="card-header">{{ s.name }}</h4>
+          <h4 class="card-header">{{ ad.name }}</h4>
           <div class="card-body">
-            <p class="card-text">{{ s.info }}</p>
+            <p class="card-text">{{ ad.info }}</p>
           </div>
           <div class="card-footer">
-            <a href="/ads/view/{{ s.id }}" class="btn btn-primary">توضیحات بیشتر</a>
+            <a href="/ads/view/{{ ad.id }}" class="btn btn-primary">توضیحات بیشتر</a>
           </div>
           </div>
         </div>

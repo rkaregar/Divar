@@ -47,6 +47,7 @@ class Category(models.Model):
         if self.parent and self.parent.level != self.level - 1:
             raise ValidationError({'parent': 'Parent should be selected among the categories of one higher level'})
 
+
 class Images(models.Model):
     image = models.ImageField(upload_to='img', null=True)
     advertisement = models.ForeignKey(to=Advertisement, on_delete=CASCADE, related_name='images')

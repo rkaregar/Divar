@@ -4,6 +4,7 @@ from django.urls import reverse
 from django.views.generic import FormView, CreateView, UpdateView, TemplateView
 
 from users.models import Member
+from ads.models import Advertisement, Images
 from .forms import MemberActivationForm, MemberCreationForm
 
 class MemberActivationView(FormView):
@@ -32,19 +33,6 @@ class EditProfileView(UpdateView):
 
     def get_object(self, queryset=None):
         return self.request.user.member
-
-
-class MyAdsView(TemplateView):
-    template_name = 'homepage.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['ss'] = [{'name': 'آگهی اول', 'info': 'محصول', 'id': 1, 'image': ''},
-                         {'name': 'دومین آگهی', 'info': 'توضیح', 'id': 1, 'image': ''},
-                         {'name': 'دومین آگهی', 'info': 'توضیح', 'id': 1, 'image': ''},
-                         {'name': 'دومین آگهی', 'info': 'توضیح', 'id': 1, 'image': ''},
-                         {'name': 'دومین آگهی', 'info': 'توضیح', 'id': 1, 'image': ''}, ]
-        return context
 
 
 
