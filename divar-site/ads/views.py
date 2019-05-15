@@ -3,6 +3,7 @@ from django.http.response import HttpResponseForbidden, JsonResponse
 from django.shortcuts import render
 
 # Create your views here.
+from django.urls import reverse, reverse_lazy
 from django.views.generic import TemplateView, CreateView, UpdateView, View
 from ads.forms import AdvertisementCreationForm, ImagesFormset
 from django.shortcuts import get_object_or_404
@@ -106,9 +107,10 @@ class AdvertisementViewView(TemplateView):
 class AdvertisementArchiveView(UpdateView):
     model = Advertisement
     fields = ['is_archived']
+    success_url = reverse_lazy('ads:my-ads')
 
     def get_object(self, queryset=None):
-        ret = super().get_object()
+        ret = get_object_or_404(Advertisement, id=self.request.POST['id'])
         if self.request.user.is_superuser or ret.user == self.request.user:
             return ret
         raise PermissionDenied()
@@ -135,7 +137,6 @@ class BookmarkView(TemplateView):
             else:
                 image = ''
             context['ads'].append({'name': ad.title, 'info': ad.description, 'id': ad.id, 'image': image})
-
 
         return context
 
@@ -167,11 +168,12 @@ class MyAdsView(TemplateView):
                 image = images[0]
             else:
                 image = ''
-            context['ads'].append({'name': ad.title, 'info': ad.description, 'id': ad.id, 'image': image})
+            context['ads'].append(
+                {'name': ad.title, 'info': ad.description, 'id': ad.id, 'image': image, 'is_archived': ad.is_archived})
 
         context['ads'] += [{'name': 'آگهی اول', 'info': 'محصول', 'id': 1, 'image': ''},
                            {'name': 'دومین آگهی', 'info': 'توضیح', 'id': 1, 'image': ''},
                            {'name': 'دومین آگهی', 'info': 'توضیح', 'id': 1, 'image': ''},
                            {'name': 'دومین آگهی', 'info': 'توضیح', 'id': 1, 'image': ''},
-                           {'name': 'دومین آگهی', 'info': 'توضیح', 'id': 1, 'image': ''}, ]
+                           {'name': 'دومین آگهی', 'info': 'توضیح', 'id': 1, 'image': '', 'is_archived': True}, ]
         return context
