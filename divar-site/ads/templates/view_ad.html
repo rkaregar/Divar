@@ -18,26 +18,37 @@
   <div class="container" align="right" id="features">
     <div class="row" id="properties">
       <div class="col-lg-5">
-        {#        <div class="row"><h2>{{ title }}</h2>#}
-        {#          <span class="badge badge-danger">فوری</span></div>#}
         <h2>{{ title }}
           {% if is_urgent %}
-            <span class="badge badge-danger">فوری</span>
+              <button type="button" class="btn btn-danger">فوری</button>
           {% endif %}
-          <span class="badge badge-danger">فوری</span>
+{#            <button id="bookmark" type="submit" class="btn btn-outline-primary" data-bookmark=0>نشان کردن</button>#}
+            <button id="bookmark" type="button" class="btn btn-primary" data-bookmark=0>{% if is_urgent %} نشان شده{% else %} نشان کردن{% endif %}</button>
         </h2>
+      <script>
+        $("#bookmark").click(function () {
+            let bookmark = $(this).attr("data-bookmark")
+            let text = $(this).val()
+            console.log("salam hello", bookmark, text)
+            $("#bookmark").removeClass("btn-primary").addClass("btn-outline-primary")
+
+            $.ajax({
+                data: {},
+                success: function (data) {
+                    $("#bookmark").removeClass("btn-primary")
+                    $("#bookmark").addClass("btn-outline-primary")
+
+                }
+            })
+
+        })
+      </script>
 
 
         <label id="creation_time">{{ creation_time }}</label>
 
         <table class="table">
           <tbody>
-          {#          {% for row in rows %}#}
-          {#            <tr>#}
-          {#              <td>{{ row }}</td>#}
-          {#              <td>{{ row }}</td>#}
-          {#            </tr>#}
-          {#          {% endfor %}#}
 
           <tr>
             <td>قیمت</td>
