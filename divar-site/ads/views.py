@@ -70,6 +70,7 @@ class AdvertisementViewView(TemplateView):
         context = super().get_context_data(**kwargs)
         advertisement_id = self.kwargs['id']
         advertisement = get_object_or_404(Advertisement, id=advertisement_id)
+        context['id'] = advertisement_id
         context['title'] = advertisement.title
         context['price'] = advertisement.price
         context['description'] = advertisement.description
