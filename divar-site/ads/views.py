@@ -7,8 +7,18 @@ from django.shortcuts import get_object_or_404
 from ads.models import Advertisement
 from django.db import transaction
 
+
 class HomeView(TemplateView):
     template_name = 'homepage.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['ss'] = [{'name': 'آگهی اول', 'info': 'محصول', 'id': 1, 'image': ''},
+                         {'name': 'دومین آگهی', 'info': 'توضیح', 'id': 1, 'image': ''},
+                         {'name': 'دومین آگهی', 'info': 'توضیح', 'id': 1, 'image': ''},
+                         {'name': 'دومین آگهی', 'info': 'توضیح', 'id': 1, 'image': ''},
+                         {'name': 'دومین آگهی', 'info': 'توضیح', 'id': 1, 'image': ''}, ]
+        return context
 
 
 class AdvertisementCreationView(CreateView):
