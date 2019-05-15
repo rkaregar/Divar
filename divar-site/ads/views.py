@@ -1,7 +1,9 @@
+from django.core.exceptions import PermissionDenied
+from django.http.response import HttpResponseForbidden, JsonResponse
 from django.shortcuts import render
 
 # Create your views here.
-from django.views.generic import TemplateView, CreateView
+from django.views.generic import TemplateView, CreateView, UpdateView, View
 from ads.forms import AdvertisementCreationForm, ImagesFormset
 from django.shortcuts import get_object_or_404
 from ads.models import Advertisement
@@ -79,3 +81,40 @@ class AdvertisementViewView(TemplateView):
         context['user_email'] = advertisement.user.email
         context['sharable_link'] = 'ads/view/' + str(advertisement_id)
         return context
+
+
+class AdvertisementArchiveView(UpdateView):
+    model = Advertisement
+    fields = ['is_archived']
+
+    def get_object(self, queryset=None):
+        ret = super().get_object()
+        if self.request.user.is_superuser or ret.user == self.request.user:
+            return ret
+        raise PermissionDenied()
+
+
+
+class BookmarkView(TemplateView):
+
+    template_name = 'bookmarked_ads.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            raise PermissionDenied()
+        self.member = request.user.member
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        return {**super().get_context_data(**kwargs), 'ads': self.member.bookmarked_ads}
+
+    def post(self, request, *args, **kwargs):
+        ad_pk = request.POST['ad']
+        ad = get_object_or_404(Advertisement, pk=ad_pk)
+        if request.POST['bookmark'] == 'true':
+            if not self.member.bookmarked_ads.filter(pk=ad_pk):
+                self.member.bookmarked_ads.add(ad)
+        else:
+            if self.member.bookmarked_ads.filter(pk=ad_pk):
+                self.member.bookmarked_ads.remove(ad)
+        return JsonResponse({'result': 'ok'})
