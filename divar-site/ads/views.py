@@ -6,7 +6,7 @@ from django.shortcuts import render
 from django.views.generic import TemplateView, CreateView, UpdateView, View
 from ads.forms import AdvertisementCreationForm, ImagesFormset
 from django.shortcuts import get_object_or_404
-from ads.models import Advertisement
+from ads.models import Advertisement, Images
 from django.db import transaction
 
 
@@ -15,16 +15,26 @@ class HomeView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['ss'] = [{'name': 'آگهی اول', 'info': 'محصول', 'id': 1, 'image': ''},
-                         {'name': 'دومین آگهی', 'info': 'توضیح', 'id': 1, 'image': ''},
-                         {'name': 'دومین آگهی', 'info': 'توضیح', 'id': 1, 'image': ''},
-                         {'name': 'دومین آگهی', 'info': 'توضیح', 'id': 1, 'image': ''},
-                         {'name': 'دومین آگهی', 'info': 'توضیح', 'id': 1, 'image': ''}, ]
+
+        context['ads'] = []
+        ads = Advertisement.objects.all()
+        for ad in ads:
+            images = Images.objects.filter(advertisement=ad.id)
+            if len(images) != 0:
+                image = images[0]
+            else:
+                image = ''
+            context['ads'].append({'name': ad.title, 'info': ad.description, 'id': ad.id, 'image': image})
+
+        context['ads'] += [{'name': 'آگهی اول', 'info': 'محصول', 'id': 1, 'image': ''},
+                           {'name': 'دومین آگهی', 'info': 'توضیح', 'id': 1, 'image': ''},
+                           {'name': 'دومین آگهی', 'info': 'توضیح', 'id': 1, 'image': ''},
+                           {'name': 'دومین آگهی', 'info': 'توضیح', 'id': 1, 'image': ''},
+                           {'name': 'دومین آگهی', 'info': 'توضیح', 'id': 1, 'image': ''}, ]
         return context
 
 
 class AdvertisementCreationView(CreateView):
-
     model = Advertisement
     form_class = AdvertisementCreationForm
     success_url = '/'
@@ -39,7 +49,6 @@ class AdvertisementCreationView(CreateView):
             data['images'] = ImagesFormset()
 
         return data
-
 
     def get_form_kwargs(self):
         return {**super().get_form_kwargs(), **{'user': self.get_object()}}
@@ -80,6 +89,8 @@ class AdvertisementViewView(TemplateView):
         context['user_phone'] = advertisement.user.phone_number
         context['user_email'] = advertisement.user.email
         context['sharable_link'] = 'ads/view/' + str(advertisement_id)
+        context['images'] = Images.objects.filter(advertisement=advertisement_id)
+
         return context
 
 
@@ -94,9 +105,7 @@ class AdvertisementArchiveView(UpdateView):
         raise PermissionDenied()
 
 
-
 class BookmarkView(TemplateView):
-
     template_name = 'bookmarked_ads.html'
 
     def dispatch(self, request, *args, **kwargs):
@@ -118,3 +127,29 @@ class BookmarkView(TemplateView):
             if self.member.bookmarked_ads.filter(pk=ad_pk):
                 self.member.bookmarked_ads.remove(ad)
         return JsonResponse({'result': 'ok'})
+
+
+class MyAdsView(TemplateView):
+    template_name = 'homepage.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context['ads'] = []
+        ads = Advertisement.objects.all()
+        for ad in ads:
+            images = Images.objects.filter(advertisement=ad.id)
+            if len(images) != 0:
+                image = images[0]
+            else:
+                image = ''
+            context['ads'].append({'name': ad.title, 'info': ad.description, 'id': ad.id, 'image': image})
+
+        context['ads'] += [{'name': 'آگهی اول', 'info': 'محصول', 'id': 1, 'image': ''},
+                          {'name': 'دومین آگهی', 'info': 'توضیح', 'id': 1, 'image': ''},
+                          {'name': 'دومین آگهی', 'info': 'توضیح', 'id': 1, 'image': ''},
+                          {'name': 'دومین آگهی', 'info': 'توضیح', 'id': 1, 'image': ''},
+                          {'name': 'دومین آگهی', 'info': 'توضیح', 'id': 1, 'image': ''}, ]
+        return context
+
+

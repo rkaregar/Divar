@@ -7,7 +7,6 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('change-password/', auth_views.PasswordChangeView.as_view(template_name='change_password.html', success_url=reverse_lazy('users:password_change_done')), name='change-password'),
     path('change-password-done/', auth_views.PasswordChangeDoneView.as_view(template_name='change_password_done.html'), name='password_change_done'),
-    path('my-ads/', MyAdsView.as_view(template_name='my_ads.html'), name='my-ads'),
     path('activation/<slug:username>/', MemberActivationView.as_view(), name='activation'),
     path('signup/', MemberCreationView.as_view(), name='signup'),
     path('edit-profile/', EditProfileView.as_view(), name='edit-profile'),
