@@ -1,53 +1,53 @@
-
-
 <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark fixed-top">
-  <div class="container">
-    <a class="navbar-brand" href="{% url 'ads:home' %}">دیوار</a>
-    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
-            data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
-            aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarResponsive">
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item">
-{#          <a class="nav-link" href="/about" id="about">دربارهٔ ما</a>#}
-        </li>
+    <div class="container">
+        <a class="navbar-brand" href="{% url 'ads:home' %}">دیوار</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+                data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+                aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    {#          <a class="nav-link" href="/about" id="about">دربارهٔ ما</a>#}
+                </li>
 
-        {% if user.is_authenticated %}
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="profile" data-toggle="dropdown"
-               aria-haspopup="true" aria-expanded="false">
-              پروفایل
-            </a>
-            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownBlog"
-                 style="padding-left: 18px">
-              <a class="dropdown-item" href="{% url 'users:my-ads' %}">آگهی‌های من</a>
-              <a class="dropdown-item" href="{% url 'users:change-password' %}">تغییر رمز عبور</a>
-              <a class="dropdown-item" href="{% url 'users:edit-profile' %}">تغییر شماره تلفن</a>
-                {#              <a class="dropdown-item" href="/add_credit">افزایش اعتبار</a>#}
-{#              <a class="dropdown-item" href="/withdraw_credit">برداشت پول از اعتبار</a>#}
-{#              <a class="dropdown-item" href="/anonymous_transfer">پرداخت ناشناس</a>#}
-{#              <a class="dropdown-item" href="/transactions">تاریخچهٔ تراکنش‌ها</a>#}
-            </div>
-          </li>
-            <li class="nav-item">
-            <a class="nav-link" href="{% url 'ads:create_advertisement'%}" id="create_advertisement">اضافه کردن آگهی</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'users:logout'%}" id="logout">خروج</a>
-          </li>
-        {% else %}
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'users:login'%}" id="login">ورود</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'users:signup'%}" id="signup">ثبت نام</a>
-          </li>
-        {% endif %}
-      </ul>`
+                {% if user.is_authenticated %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="profile" data-toggle="dropdown"
+                           aria-haspopup="true" aria-expanded="false">
+                            پروفایل
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownBlog"
+                             style="padding-left: 18px">
+                            <a class="dropdown-item" href="{% url 'users:my-ads' %}">آگهی‌های من</a>
+                            <a class="dropdown-item" href="{% url 'ads:view_bookmarks' %}">آگهی‌های نشان‌شده</a>
+                            <a class="dropdown-item" href="{% url 'users:change-password' %}">تغییر رمز عبور</a>
+                            <a class="dropdown-item" href="{% url 'users:edit-profile' %}">تغییر شماره تلفن</a>
+                            {#              <a class="dropdown-item" href="/withdraw_credit">برداشت پول از اعتبار</a>#}
+                            {#              <a class="dropdown-item" href="/anonymous_transfer">پرداخت ناشناس</a>#}
+                            {#              <a class="dropdown-item" href="/transactions">تاریخچهٔ تراکنش‌ها</a>#}
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'ads:create_advertisement' %}" id="create_advertisement">اضافه
+                            کردن آگهی</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'users:logout' %}" id="logout">خروج</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'users:login' %}" id="login">ورود</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'users:signup' %}" id="signup">ثبت نام</a>
+                    </li>
+                {% endif %}
+            </ul>
+            `
+        </div>
     </div>
-  </div>
 </nav>
 
 {% block master_content %}
@@ -55,18 +55,17 @@
 
 {% endblock %}
 
-<footer class="py-2 bg-dark fixed-bottom" dir="rtl" >
-  <div class="container">
-    <p class="m-0 text-center text-white">کپی‌رایت: Divar</p>
-  </div>
+<footer class="py-2 bg-dark fixed-bottom" dir="rtl">
+    <div class="container">
+        <p class="m-0 text-center text-white">کپی‌رایت: Divar</p>
+    </div>
 </footer>
-
 
 
 {#<script>#}
 {#    var loc = document.URL.match(/\/[A-Za-z_]+\//)[0];#}
 {#    loc = loc.substring(1, loc.length - 1);#}
-    {#document.getElementById("testA").innerHTML = loc;#}
+{#document.getElementById("testA").innerHTML = loc;#}
 {#    if (loc == 'services')#}
 {#        document.getElementById("services").className += " active";#}
 {#    else if (loc == 'admin' || loc == 'create_service')#}

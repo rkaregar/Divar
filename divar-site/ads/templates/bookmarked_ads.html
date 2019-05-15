@@ -1,10 +1,61 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "master.html" %}
+{% load static %}
+{% block content %}
+    <head>
+        <link rel="stylesheet" href="/static/Panels.css">
+    </head>
 
-</body>
-</html>
+    <div id="wrapper" class="row" style="padding-bottom:20px;">
+
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper" class="col-3" align="center" style="padding-right: 50px;">
+            <div class="list-group">
+                <a href="{% url 'users:my-ads' %}" class="list-group-item list-group-item-action">آگهی‌های من</a>
+                <a href="{% url 'ads:view_bookmarks' %}" class="list-group-item list-group-item-action active">آگهی‌های نشان شده</a>
+                <a href="{% url 'users:change-password' %}" class="list-group-item list-group-item-action">تغییر رمز
+                    عبور</a>
+                <a href="{% url 'users:edit-profile' %}"
+                   class="list-group-item list-group-item-action">تغییر شماره تلفن</a>
+            </div>
+        </div>
+
+        <div id="page-content-wrapper" class="col-9" align="center" style="padding-left: 50px; padding-right: 50px">
+            {% for ad in ads %}
+                {% if forloop.counter0|divisibleby:3 %}
+                    <div class="row" align="center">
+                {% endif %}
+
+
+            <div class="col-lg-4 mb-4">
+                <div class="card h-100">
+
+
+                    <a href="{% url 'ads:view_advertisement' id=ad.id %}">
+                        {% if ad.image %}
+                            <img class="card-img-top" src="{{ image }}" alt="">
+                        {% else %}
+                            <img class="card-img-top" src="{% static "images/no_photo.png" %}" alt="">
+                        {% endif %}
+                    </a>
+
+                    <h4 class="card-header">{{ ad.name }}</h4>
+                    <div class="card-body">
+                        <p class="card-text">{{ ad.info }}</p>
+                    </div>
+                    <div class="card-footer">
+                        <a href="/ads/view/{{ ad.id }}" class="btn btn-primary">توضیحات بیشتر</a>
+                    </div>
+                </div>
+            </div>
+
+            {% if forloop.counter0|add:1|divisibleby:3 or forloop.counter == ss|length %}
+                </div>
+            {% endif %}
+
+            {% endfor %}
+        </div>
+
+    </div>
+
+{% endblock content %}
+

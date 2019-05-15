@@ -107,7 +107,7 @@ class BookmarkView(TemplateView):
         return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
-        return {**super().get_context_data(**kwargs), 'ads': self.member.bookmarked_ads}
+        return {**super().get_context_data(**kwargs), 'ads': self.member.bookmarked_ads.all()}
 
     def post(self, request, *args, **kwargs):
         ad_pk = request.POST['ad']
