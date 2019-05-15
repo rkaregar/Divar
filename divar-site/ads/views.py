@@ -75,6 +75,12 @@ class AdvertisementCreationView(CreateView):
 class AdvertisementViewView(TemplateView):
     template_name = 'view_ad.html'
 
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            raise PermissionDenied()
+        self.member = request.user.member
+        return super().dispatch(request, *args, **kwargs)
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         advertisement_id = self.kwargs['id']
@@ -91,6 +97,10 @@ class AdvertisementViewView(TemplateView):
         context['user_email'] = advertisement.user.email
         context['sharable_link'] = 'ads/view/' + str(advertisement_id)
         context['images'] = Images.objects.filter(advertisement=advertisement_id)
+        if not self.member.bookmarked_ads.filter(pk=advertisement_id):
+            context['bookmark'] = 0
+        else:
+            context['bookmark'] = 1
 
         return context
 
@@ -116,18 +126,33 @@ class BookmarkView(TemplateView):
         return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
-        return {**super().get_context_data(**kwargs), 'ads': self.member.bookmarked_ads.all()}
+        context = super().get_context_data(**kwargs)
 
-    def post(self, request, *args, **kwargs):
-        ad_pk = request.POST['ad']
-        ad = get_object_or_404(Advertisement, pk=ad_pk)
-        if request.POST['bookmark'] == 'true':
-            if not self.member.bookmarked_ads.filter(pk=ad_pk):
-                self.member.bookmarked_ads.add(ad)
-        else:
-            if self.member.bookmarked_ads.filter(pk=ad_pk):
-                self.member.bookmarked_ads.remove(ad)
-        return JsonResponse({'result': 'ok'})
+        context['ads'] = []
+        ads = self.member.bookmarked_ads.all()
+        for ad in ads:
+            images = Images.objects.filter(advertisement=ad.id)
+            if len(images) != 0:
+                image = images[0]
+            else:
+                image = ''
+            context['ads'].append({'name': ad.title, 'info': ad.description, 'id': ad.id, 'image': image})
+
+
+        return context
+
+
+def bookmark_ad(request):
+    member = request.user.member
+    ad_pk = request.GET['ad']
+    ad = get_object_or_404(Advertisement, pk=ad_pk)
+    if request.GET['bookmark'] == 'true':
+        if not member.bookmarked_ads.filter(pk=ad_pk):
+            member.bookmarked_ads.add(ad)
+    else:
+        if member.bookmarked_ads.filter(pk=ad_pk):
+            member.bookmarked_ads.remove(ad)
+    return JsonResponse({'result': 'ok'})
 
 
 class MyAdsView(TemplateView):
@@ -147,10 +172,8 @@ class MyAdsView(TemplateView):
             context['ads'].append({'name': ad.title, 'info': ad.description, 'id': ad.id, 'image': image})
 
         context['ads'] += [{'name': 'آگهی اول', 'info': 'محصول', 'id': 1, 'image': ''},
-                          {'name': 'دومین آگهی', 'info': 'توضیح', 'id': 1, 'image': ''},
-                          {'name': 'دومین آگهی', 'info': 'توضیح', 'id': 1, 'image': ''},
-                          {'name': 'دومین آگهی', 'info': 'توضیح', 'id': 1, 'image': ''},
-                          {'name': 'دومین آگهی', 'info': 'توضیح', 'id': 1, 'image': ''}, ]
+                           {'name': 'دومین آگهی', 'info': 'توضیح', 'id': 1, 'image': ''},
+                           {'name': 'دومین آگهی', 'info': 'توضیح', 'id': 1, 'image': ''},
+                           {'name': 'دومین آگهی', 'info': 'توضیح', 'id': 1, 'image': ''},
+                           {'name': 'دومین آگهی', 'info': 'توضیح', 'id': 1, 'image': ''}, ]
         return context
-
-
