@@ -76,9 +76,7 @@ class AdvertisementViewView(TemplateView):
     template_name = 'view_ad.html'
 
     def dispatch(self, request, *args, **kwargs):
-        if not request.user.is_authenticated:
-            raise PermissionDenied()
-        self.member = request.user.member
+        self.user = request.user
         return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
@@ -97,10 +95,10 @@ class AdvertisementViewView(TemplateView):
         context['user_email'] = advertisement.user.email
         context['sharable_link'] = 'ads/view/' + str(advertisement_id)
         context['images'] = Images.objects.filter(advertisement=advertisement_id)
-        if not self.member.bookmarked_ads.filter(pk=advertisement_id):
-            context['bookmark'] = 0
-        else:
+        if self.user.is_authenticated and self.user.member.bookmarked_ads.filter(pk=advertisement_id):
             context['bookmark'] = 1
+        else:
+            context['bookmark'] = 0
 
         return context
 

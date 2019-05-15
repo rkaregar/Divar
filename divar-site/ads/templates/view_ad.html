@@ -23,10 +23,12 @@
                         <button type="button" class="btn btn-danger">فوری</button>
                     {% endif %}
 
-                    <button id="bookmark" type="button" {% if bookmark == 1 %} class="btn btn-primary" {% else %} class="btn
-                        btn-outline-primary" {% endif %}
-                    data-bookmark={{ bookmark }}>{% if bookmark %}
-                        نشان شده{% else %} نشان کردن{% endif %}</button>
+                    {% if user.is_authenticated %}
+                        <button id="bookmark" type="button" {% if bookmark == 1 %} class="btn btn-primary" {% else %} class="btn
+                            btn-outline-primary" {% endif %}
+                        data-bookmark={{ bookmark }}>{% if bookmark %}
+                            نشان شده{% else %} نشان کردن{% endif %}</button>
+                    {% endif %}
                 </h2>
                 <script>
                     $("#bookmark").click(function () {
