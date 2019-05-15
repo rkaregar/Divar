@@ -4,10 +4,13 @@ from django.db import models
 # Create your models here.
 from django.db.models.deletion import CASCADE
 
+# from ads.models import Advertisement
+
 
 class Member(models.Model):
     user = models.OneToOneField(to=User, on_delete=CASCADE, related_name='member')
     phone_number = models.CharField(max_length=12)
+    bookmarked_ads = models.ManyToManyField(to='ads.Advertisement')
 
     def __str__(self):
         return self.user.username
