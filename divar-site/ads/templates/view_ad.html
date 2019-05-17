@@ -24,9 +24,10 @@
                     {% endif %}
 
                     {% if user.is_authenticated %}
-                        <button id="bookmark" type="button" {% if bookmark == 1 %} class="btn btn-primary" {% else %} class="btn
+                        <button id="bookmark" type="button" {% if bookmark == 1 %} class="btn btn-primary" {% else %}
+                                class="btn
                             btn-outline-primary" {% endif %}
-                        data-bookmark={{ bookmark }}>{% if bookmark %}
+                                data-bookmark={{ bookmark }}>{% if bookmark %}
                             نشان شده{% else %} نشان کردن{% endif %}</button>
                     {% endif %}
                 </h2>
@@ -156,6 +157,39 @@
 
         <hr>
 
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" dir="rtl">گزارش آگهی</h4>
+                    </div>
+                    <div class="modal-body" style="margin: 5px">
+                        <form action="" method="post">
+                            {% csrf_token %}
+                            <div class="form-group row" dir="rtl">
+                                <label for="reason" class="col-form-label">دلیل شما:</label>
+                                <textarea name="" class="form-control" rows="4"
+                                          placeholder="دلیل خود را اینجا وارد نمایید"></textarea>
+
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">انصراف</button>
+                        <button type="submit" class="btn btn-success"
+                                style="margin-right: 5px;">ارسال
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">گزارش مشکل آگهی
+        </button>
 
     </div>
     <script src="/static/Translator.js"></script>
