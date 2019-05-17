@@ -111,8 +111,8 @@ class AdvertisementArchiveView(UpdateView):
 
     def get_object(self, queryset=None):
         ret = get_object_or_404(Advertisement, id=self.request.POST['id'])
-        # if self.request.user.is_superuser or ret.user == self.request.user:
-        return ret
+        if self.request.user.is_superuser or ret.user == self.request.user.member:
+            return ret
         raise PermissionDenied()
 
 
@@ -185,3 +185,28 @@ class ReportCreationView(CreateView):
 
     def get_success_url(self):
         return reverse('ads:view_advertisement', args=self.request.POST['id'])
+
+
+class AdvertisementEditView(UpdateView):
+    model = Advertisement
+    fields = ['title', 'price', 'description', 'is_urgent', 'city']
+    success_url = '/'
+    template_name = "edit_ad.html"
+
+    def get_object(self, queryset=None):
+        ret = get_object_or_404(Advertisement, id=self.kwargs['id'])
+        self.ad = ret
+        if ret.user != self.request.user.member:
+            raise PermissionDenied()
+        return ret
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['ad'] = self.ad
+        return context
+
+    def form_valid(self, form):
+        ad = form.save(commit=False)
+        ad.user = self.request.user.member
+        ad.save()
+        return super().form_valid(form)
