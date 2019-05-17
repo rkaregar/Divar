@@ -167,12 +167,13 @@
                         <h4 class="modal-title" dir="rtl">گزارش آگهی</h4>
                     </div>
                     <div class="modal-body" style="margin: 5px">
-                        <form action="" method="post">
+                        <form action="{% url 'ads:report_ad' id=id %}" method="post" id="report-form">
                             {% csrf_token %}
                             <div class="form-group row" dir="rtl">
                                 <label for="reason" class="col-form-label">دلیل شما:</label>
-                                <textarea name="" class="form-control" rows="4"
+                                <textarea name="reason" class="form-control" rows="4"
                                           placeholder="دلیل خود را اینجا وارد نمایید"></textarea>
+                                <input type="hidden" name="id" value="{{ id }}">
 
                             </div>
                         </form>
@@ -180,8 +181,8 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-dismiss="modal">انصراف</button>
                         <button type="submit" class="btn btn-success"
-                                style="margin-right: 5px;">ارسال
-                        </button>
+                                        style="margin-right: 5px;" form="report-form">ارسال
+                                </button>
                     </div>
                 </div>
 

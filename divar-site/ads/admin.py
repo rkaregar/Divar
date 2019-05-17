@@ -1,5 +1,5 @@
 from django.contrib import admin
-from ads.models import Category, Advertisement, Images
+from ads.models import Category, Advertisement, Images, ReportAdvertisement
 # Register your models here.
 
 
@@ -14,3 +14,4 @@ class AdvertisementAdmin(admin.ModelAdmin):
 admin.site.register(Advertisement, AdvertisementAdmin)
 admin.site.register(Category)
 admin.site.register(Images)
+admin.site.register(ReportAdvertisement)

@@ -51,3 +51,11 @@ class Category(models.Model):
 class Images(models.Model):
     image = models.ImageField(upload_to='img', null=True)
     advertisement = models.ForeignKey(to=Advertisement, on_delete=CASCADE, related_name='images')
+
+
+class ReportAdvertisement(models.Model):
+    reason = models.CharField(max_length=200, null=True, blank=True)
+    advertisement = models.ForeignKey(to=Advertisement, on_delete=CASCADE, related_name='reports')
+
+    def __str__(self):
+        return self.advertisement.title

@@ -1,6 +1,6 @@
 from django.urls import path
 from ads.views import HomeView, AdvertisementCreationView, AdvertisementViewView, BookmarkView, MyAdsView, bookmark_ad, \
-    AdvertisementArchiveView
+    AdvertisementArchiveView, ReportCreationView
 
 urlpatterns = [
     path('', HomeView.as_view(), name='home'),
@@ -9,5 +9,6 @@ urlpatterns = [
     path('view/<int:id>/', AdvertisementViewView.as_view(), name='view_advertisement'),
     path('bookmarks/', BookmarkView.as_view(), name='view_bookmarks'),
     path('ajax/bookmark_ad/', bookmark_ad, name='bookmark_ad'),
-    path('archive/<int:id>/', AdvertisementArchiveView.as_view(), name='archive_ad')
+    path('archive/<int:id>/', AdvertisementArchiveView.as_view(), name='archive_ad'),
+    path('report/<int:id>/', ReportCreationView.as_view(), name='report_ad')
 ]

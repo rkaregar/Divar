@@ -5,9 +5,9 @@ from django.shortcuts import render
 # Create your views here.
 from django.urls import reverse, reverse_lazy
 from django.views.generic import TemplateView, CreateView, UpdateView, View
-from ads.forms import AdvertisementCreationForm, ImagesFormset
+from ads.forms import AdvertisementCreationForm, ImagesFormset, ReportCreation
 from django.shortcuts import get_object_or_404
-from ads.models import Advertisement, Images
+from ads.models import Advertisement, Images, ReportAdvertisement
 from django.db import transaction
 
 
@@ -111,8 +111,8 @@ class AdvertisementArchiveView(UpdateView):
 
     def get_object(self, queryset=None):
         ret = get_object_or_404(Advertisement, id=self.request.POST['id'])
-        if self.request.user.is_superuser or ret.user == self.request.user:
-            return ret
+        # if self.request.user.is_superuser or ret.user == self.request.user:
+        return ret
         raise PermissionDenied()
 
 
@@ -177,3 +177,11 @@ class MyAdsView(TemplateView):
                            {'name': 'دومین آگهی', 'info': 'توضیح', 'id': 1, 'image': ''},
                            {'name': 'دومین آگهی', 'info': 'توضیح', 'id': 1, 'image': '', 'is_archived': True}, ]
         return context
+
+
+class ReportCreationView(CreateView):
+    model = ReportAdvertisement
+    form_class = ReportCreation
+
+    def get_success_url(self):
+        return reverse('ads:view_advertisement', args=self.request.POST['id'])

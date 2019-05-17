@@ -1,6 +1,6 @@
 from django import forms
 from django.shortcuts import get_object_or_404
-from ads.models import Advertisement, Category, Images
+from ads.models import Advertisement, Category, Images, ReportAdvertisement
 from django.forms import inlineformset_factory
 
 
@@ -53,3 +53,17 @@ class ImagesCreationForm(forms.ModelForm):
 
 ImagesFormset = inlineformset_factory(parent_model=Advertisement, model=Images, fields=('image',),
                                       form=ImagesCreationForm, extra=3)
+
+
+class ReportCreation(forms.ModelForm):
+    id = forms.IntegerField()
+
+    class Meta:
+        model = ReportAdvertisement
+        fields = ('reason','id')
+
+    def save(self, commit=True):
+        ad_id = self.cleaned_data['id']
+        ad = get_object_or_404(Advertisement, id=ad_id)
+        report = ReportAdvertisement.objects.create(reason=self.cleaned_data['reason'], advertisement=ad)
+        return report
