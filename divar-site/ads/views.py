@@ -3,9 +3,7 @@ from django.http.response import JsonResponse, HttpResponse
 from django.template.loader import render_to_string
 from django.urls import reverse, reverse_lazy
 from django.views.generic import TemplateView, CreateView, UpdateView, View
-from django.views.generic.detail import DetailView
-from django.views.generic.list import ListView
-
+import django_filters
 from ads.forms import AdvertisementCreationForm, ImagesFormset, ReportCreation
 from django.shortcuts import get_object_or_404
 from ads.models import Advertisement, Images, ReportAdvertisement, Category
@@ -210,6 +208,28 @@ class AdvertisementEditView(UpdateView):
         ad.user = self.request.user.member
         ad.save()
         return super().form_valid(form)
+
+
+class AdvertisementFilters(django_filters.FilterSet):
+    class Meta:
+        user = Advertisement
+        fields = ('price', 'city', 'is_urgent', 'category')
+
+
+def search(request):
+    category = request.POST['category']
+    city = request.POST['city']
+    price = request.POST['price']
+    is_urgent = request.POST['is_urgent']
+    is_image = request.POST['is_image']
+
+    ads = Advertisement.objects.filter(city=city, price=price, category=category, is_urgent=is_urgent)
+    final_ids = []
+    for ad in ads:
+        if (len(ad.images.all()) > 0 and is_image) or (len(ad.images.all()) == 0 and not is_image):
+            final_ids.append(ad.id)
+    final_ads = Advertisement.objects.filter(id__in=final_ids)
+    return HttpResponse(render_to_string('ads_list.html', {'ads': final_ads}))
 
 
 class CategoryDropdownView(View):
