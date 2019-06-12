@@ -24,7 +24,7 @@ class Migration(migrations.Migration):
                 ('is_archived', models.BooleanField(default=False)),
                 ('city', models.CharField(choices=[('Tehran', 'Tehran'), ('Rasht', 'Rasht'), ('Kerman', 'Kerman'), ('Isfahan', 'Isfahan'), ('Rafsanjan', 'Rafsanjan'), ('Birjand', 'Birjand')], max_length=20)),
                 ('creation_time', models.DateTimeField(auto_now_add=True)),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='member', to='users.Member')),
+                # ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='member', to='users.Member')),
             ],
         ),
         migrations.CreateModel(
