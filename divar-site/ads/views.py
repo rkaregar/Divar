@@ -10,11 +10,19 @@ from django.shortcuts import get_object_or_404
 from ads.models import Advertisement, Images, ReportAdvertisement
 from django.db import transaction
 
+from users.models import Member
+
 
 class HomeView(TemplateView):
     template_name = 'homepage.html'
 
     def get_context_data(self, **kwargs):
+        if self.request.user.is_authenticated:
+            if not hasattr(self.request.user, 'member'):
+                member = Member(user=self.request.user)
+                member.save()
+                self.request.user.member = member
+
         context = super().get_context_data(**kwargs)
 
         context['ads'] = []
@@ -27,11 +35,6 @@ class HomeView(TemplateView):
                 image = ''
             context['ads'].append({'name': ad.title, 'info': ad.description, 'id': ad.id, 'image': image})
 
-        context['ads'] += [{'name': 'آگهی اول', 'info': 'محصول', 'id': 1, 'image': ''},
-                           {'name': 'دومین آگهی', 'info': 'توضیح', 'id': 1, 'image': ''},
-                           {'name': 'دومین آگهی', 'info': 'توضیح', 'id': 1, 'image': ''},
-                           {'name': 'دومین آگهی', 'info': 'توضیح', 'id': 1, 'image': ''},
-                           {'name': 'دومین آگهی', 'info': 'توضیح', 'id': 1, 'image': ''}, ]
         return context
 
 
@@ -171,11 +174,6 @@ class MyAdsView(TemplateView):
             context['ads'].append(
                 {'name': ad.title, 'info': ad.description, 'id': ad.id, 'image': image, 'is_archived': ad.is_archived})
 
-        context['ads'] += [{'name': 'آگهی اول', 'info': 'محصول', 'id': 1, 'image': ''},
-                           {'name': 'دومین آگهی', 'info': 'توضیح', 'id': 1, 'image': ''},
-                           {'name': 'دومین آگهی', 'info': 'توضیح', 'id': 1, 'image': ''},
-                           {'name': 'دومین آگهی', 'info': 'توضیح', 'id': 1, 'image': ''},
-                           {'name': 'دومین آگهی', 'info': 'توضیح', 'id': 1, 'image': '', 'is_archived': True}, ]
         return context
 
 
