@@ -16,6 +16,7 @@ class Advertisement(models.Model):
     city = models.CharField(max_length=256, blank=True, null=True)
     user = models.ForeignKey(to=Member, on_delete=CASCADE, related_name='member')
     creation_time = models.DateTimeField(auto_now_add=True)
+    category = models.ForeignKey(to='Category', on_delete=CASCADE)
 
     def __str__(self):
         return self.title

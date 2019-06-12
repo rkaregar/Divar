@@ -2,29 +2,57 @@
 
 {% block content %}
 
-  <div id="page-content-wrapper" align="center">
+    <div id="page-content-wrapper" align="center">
 
-    <div class="container p-5" dir="rtl">
-      <div class="row justify-content-center">
-        <div class="col-md-6" align="center">
+        <div class="container p-5" dir="rtl">
+            <div class="row justify-content-center">
+                <div class="col-md-6" align="center">
 
           <div class="card" style="background: #E0E0E0; padding-right: 20px">
             <div class="card-header text-right">اطلاعات آگهی خود را وارد نمایید</div>
 
-            <div class="card-body" align="center">
-              <form method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-                <div class="form-group row">
-                  <label for="title" class="col-form-label">عنوان&nbsp;&nbsp;</label>
-                  <div class="col-sm-9">
-                    <input type="text" class="form-control" id="title"
-                           name="title"
-                           dir="rtl">
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label for="desc" class="col-form-label">توضیح</label>
-                  <div class="col-sm-9">
+                        <div class="card-body" align="center">
+                            <form method="post" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <div class="form-group row">
+                                    <label for="inputTitle" class="col-form-label">عنوان&nbsp;&nbsp;</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" id="title"
+                                               name="title"
+                                               dir="rtl">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="select1" class="col-form-label">دسته بندی</label>
+                                    <div class="col-sm-5 ">
+                                        <select class="form-control" id="select1" name="select1" dir="rtl">
+                                            <option value="">---------</option>
+                                            {% for category in cats %}
+                                                <option value="{{category.id}}">{{category.title}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="select2" class="col-form-label">دسته بندی سطح ۲</label>
+                                    <div class="col-sm-5 ">
+                                        <select class="form-control" id="select2" name="select2" dir="rtl">
+                                            <option value="">---------</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="category" class="col-form-label">دسته بندی سطح ۳</label>
+                                    <div class="col-sm-5 ">
+                                        <select class="form-control" id="category" name="category" dir="rtl">
+                                            <option value="">---------</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label for="inputDesc" class="col-form-label">توضیح</label>
+                                    <div class="col-sm-9">
                                         <textarea class="form-control" rows="7" id="desc" name="description"
                                                   dir="rtl"></textarea>
                   </div>
@@ -95,61 +123,66 @@
                   </div>
                 </div>
 
-                <table class="table">
-                  {{ images }}
-                </table>
+                                <table class="table">
+                                    {{ images }}
+                                </table>
 
-                <div class="form-group row mb-0">
-                  <div class="col-md-8 offset-md-4">
-                    <button onclick="buttonPress()" name="submit" type="submit" class="btn btn-outline-primary">
-                      ایجاد
-                    </button>
-                  </div>
+                                <div class="form-group row mb-0">
+                                    <div class="col-md-8 offset-md-4">
+                                        <button type="submit" class="btn btn-outline-primary">
+                                            ایجاد
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
                 </div>
-
-              </form>
             </div>
-          </div>
         </div>
-      </div>
-    </div>
-    <div class="col-md-8" align="center">
-      {% if form.errors %}
-        <!-- Error messaging -->
-        <div id="form_errors" style="background: #ffcccc;">
-          <div class="inner">
-            <p>خطاهای زیر پیش آمده:</p>
-            {{ form.non_field_errors }}
-            <ul>
-              {% for field in form %}
-                {% if field.errors %}
-                  <li>{{ field.label }}: {{ field.errors|striptags }}</li>{% endif %}
-              {% endfor %}
-            </ul>
-          </div>
+        <div class="col-md-8" align="center">
+            {% if form.errors %}
+                <!-- Error messaging -->
+                <div id="form_errors" style="background: #ffcccc;">
+                    <div class="inner">
+                        <p>خطاهای زیر پیش آمده:</p>
+                        {{ form.non_field_errors }}
+                        <ul>
+                            {% for field in form %}
+                                {% if field.errors %}
+                                    <li>{{ field.label }}: {{ field.errors|striptags }}</li>{% endif %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            {% endif %}
         </div>
-      {% endif %}
     </div>
-  </div>
 
-  {#  <script>#}
-  {#      function buttonPress(state) {#}
-  {#document.getElementById('state').value = $("#state option:selected").text();#}
-  {#          document.getElementById('state').value = 4;#}
-  {#          alert(document.getElementById('state').value)#}
-  {#alert($("#state option:selected").text())#}
-  {#      }#}
-  {#  </script>#}
+<script>
+    $('#select1').change(function(){
+        $.ajax({
+            url: '/ads/dropdown/',
+            data: {
+                'parent_id': $(this).val(),
+            },
+            success: function (data){
+                $('#select2').html(data);
+            }
+        });
+    });
+    $('#select2').change(function(){
+        $.ajax({
+            url: '/ads/dropdown/',
+            data: {
+                'parent_id': $(this).val(),
+            },
+            success: function (data){
+                $('#category').html(data);
+            }
+        });
+    });
 
-  {#  <script>#}
-  {#      $(document).ready(function () {#}
-  {#          $('#state').on('change', function () {#}
-  {#              //var optionValue = $(this).val();#}
-  {#              //var optionText = $('#dropdownList option[value="'+optionValue+'"]').text();#}
-  {#              var optionText = $("#state option:selected").text();#}
-  {#$("#state option:selected").text = "یزد";#}
-  {#              alert("Selected Option Text: " + optionText);#}
-  {#          });#}
-  {#      });#}
-  {#  </script>#}
+</script>
 {% endblock %}

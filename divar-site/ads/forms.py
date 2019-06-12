@@ -12,7 +12,7 @@ class AdvertisementCreationForm(forms.ModelForm):
     class Meta:
         model = Advertisement
         # fields = ('title', 'price', 'description', 'city', 'is_urgent', 'category1', 'category2', 'category3')
-        fields = ('title', 'price', 'description', 'state', 'city', 'is_urgent')
+        fields = ('title', 'price', 'description', 'state', 'city', 'is_urgent', 'category')
 
     def __init__(self, user, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -39,7 +39,7 @@ class AdvertisementCreationForm(forms.ModelForm):
                                                          description=self.cleaned_data['description'],
                                                          state=self.cleaned_data['state'],
                                                          city=self.cleaned_data['city'],
-                                                         # category=category,
+                                                         category=self.cleaned_data['category'],
                                                          user=self.user)
 
         return self.instance

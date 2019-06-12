@@ -1,13 +1,14 @@
 from django.core.exceptions import PermissionDenied
-from django.http.response import HttpResponseForbidden, JsonResponse
-from django.shortcuts import render
-
-# Create your views here.
+from django.http.response import JsonResponse, HttpResponse
+from django.template.loader import render_to_string
 from django.urls import reverse, reverse_lazy
 from django.views.generic import TemplateView, CreateView, UpdateView, View
+from django.views.generic.detail import DetailView
+from django.views.generic.list import ListView
+
 from ads.forms import AdvertisementCreationForm, ImagesFormset, ReportCreation
 from django.shortcuts import get_object_or_404
-from ads.models import Advertisement, Images, ReportAdvertisement
+from ads.models import Advertisement, Images, ReportAdvertisement, Category
 from django.db import transaction
 
 from users.models import Member
@@ -46,6 +47,7 @@ class AdvertisementCreationView(CreateView):
 
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
+        data['cats'] = Category.objects.filter(level=1)
 
         if self.request.POST:
             data['images'] = ImagesFormset(self.request.POST, self.request.FILES)
@@ -209,3 +211,10 @@ class AdvertisementEditView(UpdateView):
         ad.user = self.request.user.member
         ad.save()
         return super().form_valid(form)
+
+
+class CategoryDropdownView(View):
+    def get(self, request, *args, **kwargs):
+        parent_id = int(request.GET.get('parent_id', 0))
+        queryset = Category.objects.filter(parent_id=parent_id)
+        return HttpResponse(render_to_string('cat_dd.html', {'cats': queryset}))
