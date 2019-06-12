@@ -94,7 +94,9 @@ class AdvertisementViewView(TemplateView):
         context['city'] = advertisement.city
         context['creation_time'] = advertisement.creation_time
         context['is_urgent'] = advertisement.is_urgent
-        context['category'] = 'karegar'
+        context['category3'] = advertisement.category
+        context['category2'] = advertisement.category.parent
+        context['category1'] = advertisement.category.parent.parent
         context['user_phone'] = advertisement.user.phone_number
         context['user_email'] = advertisement.user.email
         context['sharable_link'] = 'ads/view/' + str(advertisement_id)
