@@ -1,4 +1,4 @@
-function showCity(Cities) {
+function showCity(selectedState) {
     var stateCities = {};
     stateCities["آذربایجان شرقی"] = "  ,آذرشهر ,اسکو ,اهر ,بستان‌آباد ,بناب ,تبریز ,جلفا ,چاراویماق ,سراب ,شبستر ,عجب‌شیر ,کلیبر ,مراغه ,مرند ,ملکان ,میانه ,ورزقان ,هریس ,هشترود";
     stateCities["آذربایجان غربی"] = "  ,ارومیه ,اشنویه ,بوکان ,پیرانشهر ,تکاب ,چالدران ,خوی ,سردشت ,سلماس ,شاهین‌دژ ,ماکو ,مهاباد ,میاندوآب ,نقده";
@@ -33,9 +33,9 @@ function showCity(Cities) {
 
     var _City = document.getElementById("city");
     _City.options.length = 0;
-    if (Cities != "") {
+    if (selectedState != "") {
         // var arr = Cities.split(",");
-        var arr = stateCities[Cities].split(",");
+        var arr = stateCities[selectedState].split(",");
         for (i = 0; i < arr.length; i++) {
             if (arr[i] != "") {
                 _City.options[_City.options.length] = new Option(arr[i], arr[i]);
@@ -43,14 +43,3 @@ function showCity(Cities) {
         }
     }
 }
-
-// function setDefaultState() {
-//     alert("hi")
-//     var state = {{ ad.state }};
-//     var obj = document.getElementById("state");
-//     for (i = 0; i < obj.options.length; i++) {
-//         if (obj.options[i].value == state) {
-//             obj.selectedIndex = i;
-//         }
-//     }
-// }
