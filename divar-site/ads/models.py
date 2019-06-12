@@ -7,20 +7,13 @@ from django.db.models.deletion import CASCADE
 
 
 class Advertisement(models.Model):
-    city_choices = (
-        ('Tehran', 'Tehran'),
-        ('Rasht', 'Rasht'),
-        ('Kerman', 'Kerman'),
-        ('Isfahan', 'Isfahan'),
-        ('Rafsanjan', 'Rafsanjan'),
-        ('Birjand', 'Birjand')
-    )
     title = models.CharField(max_length=20)
     price = models.CharField(max_length=10)
     is_urgent = models.BooleanField(default=False)
     description = models.CharField(max_length=200)
     is_archived = models.BooleanField(default=False)
-    city = models.CharField(max_length=20, choices=city_choices)
+    state = models.CharField(max_length=256, blank=True, null=True)
+    city = models.CharField(max_length=256, blank=True, null=True)
     user = models.ForeignKey(to=Member, on_delete=CASCADE, related_name='member')
     creation_time = models.DateTimeField(auto_now_add=True)
 

@@ -91,6 +91,7 @@ class AdvertisementViewView(TemplateView):
         context['title'] = advertisement.title
         context['price'] = advertisement.price
         context['description'] = advertisement.description
+        context['state'] = advertisement.state
         context['city'] = advertisement.city
         context['creation_time'] = advertisement.creation_time
         context['is_urgent'] = advertisement.is_urgent
@@ -187,7 +188,7 @@ class ReportCreationView(CreateView):
 
 class AdvertisementEditView(UpdateView):
     model = Advertisement
-    fields = ['title', 'price', 'description', 'is_urgent', 'city']
+    fields = ['title', 'price', 'description', 'is_urgent', 'state', 'city']
     success_url = '/'
     template_name = "edit_ad.html"
 
