@@ -3,7 +3,6 @@ from django.http.response import JsonResponse, HttpResponse
 from django.template.loader import render_to_string
 from django.urls import reverse, reverse_lazy
 from django.views.generic import TemplateView, CreateView, UpdateView, View
-import django_filters
 from ads.forms import AdvertisementCreationForm, ImagesFormset, ReportCreation
 from django.shortcuts import get_object_or_404
 from ads.models import Advertisement, Images, ReportAdvertisement, Category
@@ -209,12 +208,6 @@ class AdvertisementEditView(UpdateView):
         ad.user = self.request.user.member
         ad.save()
         return super().form_valid(form)
-
-
-class AdvertisementFilters(django_filters.FilterSet):
-    class Meta:
-        user = Advertisement
-        fields = ('price', 'city', 'is_urgent', 'category')
 
 
 def search(request):
