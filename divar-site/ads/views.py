@@ -219,7 +219,19 @@ def search(request):
     is_urgent = request.POST['is_urgent']
     is_image = request.POST['is_image']
 
-    ads = Advertisement.objects.filter(city=city, price=price, category=category, is_urgent=is_urgent)
+    ads = Advertisement.objects.all()
+    if city:
+        ads = ads.filter(city=city)
+
+    if price:
+        ads = ads.filter(price=price)
+
+    if is_urgent:
+        ads = ads.filter(is_urgent=is_urgent)
+
+    if category:
+        ads = ads.filter(category=category)
+
     final_ids = []
     for ad in ads:
         if (len(ad.images.all()) > 0 and is_image) or (len(ad.images.all()) == 0 and not is_image):
