@@ -23,6 +23,7 @@ class Advertisement(models.Model):
     city = models.CharField(max_length=20, choices=city_choices)
     user = models.ForeignKey(to=Member, on_delete=CASCADE, related_name='member')
     creation_time = models.DateTimeField(auto_now_add=True)
+    category = models.ForeignKey(to='Category', on_delete=CASCADE)
 
     def __str__(self):
         return self.title
