@@ -92,5 +92,4 @@ db.sqlite3
 
 .idea/
 venv/
-**/migrations/**
 !**/migrations/__init__.py
