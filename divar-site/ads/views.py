@@ -106,6 +106,16 @@ class AdvertisementViewView(TemplateView):
         else:
             context['bookmark'] = 0
 
+        context['relevant_ads'] = []
+        relevant_ads = advertisement.top_similar_ads(10)
+        for ad in relevant_ads:
+            images = Images.objects.filter(advertisement=ad.id)
+            if len(images) != 0:
+                image = images[0]
+            else:
+                image = ''
+            context['relevant_ads'].append({'name': ad.title, 'info': ad.description, 'id': ad.id, 'image': image})
+
         return context
 
 

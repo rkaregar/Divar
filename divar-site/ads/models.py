@@ -1,5 +1,6 @@
 from django.core.exceptions import ValidationError
 from django.db import models
+from django.db.models import Q
 from users.models import Member
 from django.db.models.deletion import CASCADE
 
@@ -20,6 +21,39 @@ class Advertisement(models.Model):
 
     def __str__(self):
         return self.title
+
+    def ad_similarity(self, other_ad):
+        score = 0
+
+        if self.user == other_ad.user:
+            score += 5
+
+        if self.category == other_ad.category:
+            score += 10
+        elif self.category.parent == other_ad.category.parent:
+            score += 7
+        elif self.category.parent.parent == other_ad.category.parent.parent:
+            score += 5
+
+        if self.city == other_ad.city:
+            score += 7
+        elif self.state == other_ad.state:
+            score += 5
+
+        if self.price == other_ad.price:
+            score += 2
+
+        if self.is_urgent == other_ad.is_urgent:
+            score += 1
+
+        return score / 25.
+
+    def top_similar_ads(self, num_of_ads):
+        ads = list(Advertisement.objects.filter(~Q(pk=self.pk)))
+
+        ads_scores = sorted(list(zip(ads, list(map(self.ad_similarity, ads)))), key=lambda x: x[1], reverse=True)
+
+        return list(list(zip(*ads_scores))[0])[:num_of_ads]
 
 
 class Category(models.Model):

@@ -1,20 +1,9 @@
 {% extends "master.html" %}
 
 {% block content %}
-
-    {#  optional, navbar for aesthetics#}
-    {#  <ol class="breadcrumb">#}
-    {#    <li class="breadcrumb-item">#}
-    {#      <a href="/">همهٔ آگهی‌ها</a>#}
-    {#    </li>#}
-    {#  #}
-    {#    {% for cat in categories %}#}
-    {#      <li class="breadcrumb-item">#}
-    {#        <a href="/">cat</a>#}
-    {#      </li>#}
-    {#    {% endfor %}#}
-    {#  </ol>#}
-
+    <head>
+        <link rel="stylesheet" href="/static/css/carousel.css">
+    </head>
     <div class="container" align="right" id="features">
         <div class="row" id="properties">
             <div class="col-lg-5">
@@ -157,8 +146,6 @@
             </div>
         </div>
 
-        <hr>
-
         <!-- Modal -->
         <div class="modal fade" id="myModal" role="dialog">
             <div class="modal-dialog">
@@ -183,8 +170,8 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-dismiss="modal">انصراف</button>
                         <button type="submit" class="btn btn-success"
-                                        style="margin-right: 5px;" form="report-form">ارسال
-                                </button>
+                                style="margin-right: 5px;" form="report-form">ارسال
+                        </button>
                     </div>
                 </div>
 
@@ -194,6 +181,73 @@
         <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">گزارش مشکل آگهی
         </button>
 
+        <hr>
+
     </div>
-    <script src="/static/Translator.js"></script>
+
+    <div class="container" align="right" id="features">
+        <h4>آگهی‌های مرتبط</h4>
+    </div>
+
+
+
+    <div class="container">
+        <div class="row">
+            <div class="MultiCarousel" data-items="1,3,5,5" data-slide="1" id="MultiCarousel" data-interval="1000">
+                <div class="MultiCarousel-inner">
+
+                    {% for ad in relevant_ads %}
+                        <div class="item">
+                            <div class="pad15">
+                                <div class="card h-100">
+
+                                    {% if ad.image %}
+                                        <a href="/ads/view/{{ ad.id }}"><img class="card-img-top"
+                                                                             src="{{ ad.image.image.url }}"
+                                                                             alt=""></a>
+                                    {% else %}
+                                        <a href="/ads/view/{{ ad.id }}"><img class="card-img-top"
+                                                                             src="/static/images/no_photo.png"
+                                                                             alt=""></a>
+                                    {% endif %}
+
+                                    <h5 class="card-header">{{ ad.name }}</h5>
+                                    <div class="card-body">
+                                        <p class="card-text">{{ ad.info }}</p>
+                                    </div>
+                                    <div class="card-footer">
+                                        <a href="/ads/view/{{ ad.id }}" class="btn btn-primary">توضیحات بیشتر</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    {% endfor %}
+                    {#                sample carousel item#}
+                    {#                    <div class="item">#}
+                    {#                        <div class="pad15">#}
+                    {#                            <p class="lead">Multi Item Carousel</p>#}
+                    {#                            <p>₹ 1</p>#}
+                    {#                            <p>₹ 6000</p>#}
+                    {#                            <p>50% off</p>#}
+                    {#                        </div>#}
+                    {#                    </div>#}
+                </div>
+                <button class="btn btn-primary leftLst">></button>
+                <button class="btn btn-primary rightLst"><</button>
+            </div>
+        </div>
+        {#        <div class="row">#}
+        {#            <div class="col-md-12 text-center">#}
+        {#                <br/><br/><br/>#}
+        {#                <hr/>#}
+        {#                <p>Settings</p>#}
+        {#                <p>Change data items for xs,sm,md and lg display items respectively. Ex:data-items="1,3,5,6"</p>#}
+        {#                <p>Change data slide for slides per click Ex:data-slide="1"</p>#}
+        {#            </div>#}
+        {#        </div>#}
+    </div>
+    <script src="/static/js/relevant_product_carousel.js"></script>
+
+    <script src="/static/js/Translator.js"></script>
 {% endblock content %}
