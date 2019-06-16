@@ -1,61 +1,171 @@
 {% extends "master.html" %}
 
 {% block content %}
-  <div class="container" align="right" id="features">
+    <head>
+        <link rel="stylesheet" href="/static/Panels.css">
+    </head>
+    <body onload="searchAds()"></body>
 
-    {% for ad in ads %}
-      {% if forloop.counter0|divisibleby:4 %}
-        <div class="row" align="center">
-      {% endif %}
+    <div id="wrapper" class="row" style="padding-bottom:20px;">
 
-      {#    <div class="col-lg-4 mb-4">#}
-      <div class="col-lg-3 mb-3">
-        <div class="card h-100">
+        <div id="sidebar-wrapper" class="col-3" align="center" style="padding-right: 50px;">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group row">
+                    <label for="title" class="col-form-label">عنوان&nbsp;&nbsp;</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="title"
+                               name="title"
+                               dir="rtl">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="select1" class="col-form-label">دسته‌بندی سطح ۱</label>
+                    <div class="col-sm-5 ">
+                        <select class="form-control" id="select1" name="select1" dir="rtl">
+                            <option value="">---------</option>
+                            {% for category in cats %}
+                                <option value="{{ category.id }}">{{ category.title }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="select2" class="col-form-label">دسته‌بندی سطح ۲</label>
+                    <div class="col-sm-5 ">
+                        <select class="form-control" id="select2" name="select2" dir="rtl">
+                            <option value="">---------</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="category" class="col-form-label">دسته‌بندی سطح ۳</label>
+                    <div class="col-sm-5 ">
+                        <select class="form-control" id="category" name="category" dir="rtl">
+                            <option value="">---------</option>
+                        </select>
+                    </div>
+                </div>
 
-          {% if ad.image %}
-            <a href="/ads/view/{{ ad.id }}"><img class="card-img-top" src="{{ ad.image.image.url }}" alt=""></a>
-          {% else %}
-            <a href="/ads/view/{{ ad.id }}"><img class="card-img-top" src="/static/images/no_photo.png" alt=""></a>
-          {% endif %}
+                <div class="form-group row">
+                    <label for="price_low" class="col-form-label">قیمت از</label>
+                    <div class="col-sm-5">
+                        <input type="number" class="form-control" id="price_low"
+                               name="price_low"
+                               dir="ltr">
+                    </div>
+                </div>
 
-          <h4 class="card-header">{{ ad.name }}</h4>
-          <div class="card-body">
-            <p class="card-text">{{ ad.info }}</p>
-          </div>
-          <div class="card-footer">
-            <a href="/ads/view/{{ ad.id }}" class="btn btn-primary">توضیحات بیشتر</a>
-          </div>
-          </div>
+                <div class="form-group row">
+                    <label for="price_high" class="col-form-label">قیمت تا</label>
+                    <div class="col-sm-5">
+                        <input type="number" class="form-control" id="price_high"
+                               name="price_high"
+                               dir="ltr">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="state" class="col-form-label">استان&nbsp;&nbsp;</label>
+                    <div class="col-sm-5 ">
+                        <select class="form-control" id="state" name="state"
+                                onchange="showCity(this.value)">
+                            <option value=""></option>
+                            <option value="آذربایجان شرقی">آذربایجان شرقی</option>
+                            <option value="آذربایجان غربی">آذربایجان غربی</option>
+                            <option value="اردبیل">اردبیل</option>
+                            <option value="اصفهان">اصفهان</option>
+                            <option value="ایلام">ایلام</option>
+                            <option value="بوشهر">بوشهر</option>
+                            <option value="تهران">تهران</option>
+                            <option value="چهارمحال و بختیاری">چهارمحال و بختیاری</option>
+                            <option value="خراسان جنوبی">خراسان جنوبی</option>
+                            <option value="خراسان رضوی">خراسان رضوی</option>
+                            <option value="خراسان شمالی">خراسان شمالی</option>
+                            <option value="خوزستان">خوزستان</option>
+                            <option value="زنجان">زنجان</option>
+                            <option value="سمنان">سمنان</option>
+                            <option value="سیستان و بلوچستان">سیستان و بلوچستان</option>
+                            <option value="فارس">فارس</option>
+                            <option value="قزوین">قزوین</option>
+                            <option value="قم">قم</option>
+                            <option value="کردستان">کردستان</option>
+                            <option value="کرمان">کرمان</option>
+                            <option value="کرمانشاه">کرمانشاه</option>
+                            <option value="کهگیلویه و بویراحمد">کهگیلویه و بویراحمد</option>
+                            <option value="گلستان">گلستان</option>
+                            <option value="گیلان">گیلان</option>
+                            <option value="لرستان">لرستان</option>
+                            <option value="مازندران">مازندران</option>
+                            <option value="مرکزی">مرکزی</option>
+                            <option value="هرمزگان">هرمزگان</option>
+                            <option value="همدان">همدان</option>
+                            <option value="یزد">یزد</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="city" class="col-form-label">شهر&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                    <div class="col-sm-5 ">
+                        <select class="form-control" id="city" name="city">
+                        </select>
+                    </div>
+                </div>
+
+
+                <div class="form-group row">
+                    <label for="is_urgent" class=" col-form-label">فوری&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                    <div class="col-sm-1">
+                        <div class="checkbox">
+                            <input type="checkbox" id="is_urgent" name="is_urgent">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="is_image" class=" col-form-label">عکس‌دار&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                    <div class="col-sm-1">
+                        <div class="checkbox">
+                            <input type="checkbox" id="is_image" name="is_image">
+                        </div>
+                    </div>
+                </div>
+
+                <table class="table">
+                    {{ images }}
+                </table>
+
+                <div class="form-group row mb-0">
+                    <div class="col-md-8 offset-md-4">
+                        <button type="button" class="btn btn-outline-primary" id="search" name="search"
+                                onclick="searchAds()">
+                            جستجو
+                        </button>
+                    </div>
+                </div>
+
+            </form>
         </div>
 
-        {% if forloop.counter0|add:1|divisibleby:4 or forloop.counter == ss|length %}
-          </div>
-        {% endif %}
-
-    {% endfor %}
-
-
-    {#    <div class="row" id="properties">#}
-    {#      <div class="col-lg-6">#}
-    {#        <h2>ویژگی‌های سامانهٔ ما</h2>#}
-    {#        <p>ویژگی‌های زیر سامانهٔ دیوار را یکتا می‌کند:</p>#}
-    {#        <ul>#}
-    {#          <li>#}
-    {#            فروش کالاها#}
-    {#          </li>#}
-    {#          <li>خرید کالاها</li>#}
-    {#          <li>تغییر رمز عبور</li>#}
-    {#        </ul>#}
-    {#        <p>ما در دیوار تلاش می‌کنیم خدمات خود را به نحوی ارائه کنیم که علاوه بر پاسخگویی به نیاز شما،‌ رضایت و#}
-    {#          آرامش شما را نیز در بر داشته باشد.</p>#}
-    {#      </div>#}
-    {#      <div class="col-lg-6">#}
-    {#        <img class="img-fluid rounded" style="width: 400px; height: 400px;" src="/static/images/divar.png" alt="">#}
-    {#      </div>#}
-    {#    </div>#}
-    {##}
-    {#    <hr>#}
+        <div id="list_of_ads" class="col-9" align="center" style="padding-left: 50px; padding-right: 50px">
+        </div>
 
 
     </div>
+
+    <script src="/static/js/category_dropdown.js"></script>
+
+    <script>
+        function searchAds() {
+            $.ajax({
+                url: '{% url 'ads:search' %}' + '?' + $('form').serialize(),
+                data: {},
+                success: function (data) {
+                    $('#list_of_ads').html(data);
+                }
+            });
+        }
+    </script>
 {% endblock content %}
+

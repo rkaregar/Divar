@@ -22,16 +22,7 @@ class HomeView(TemplateView):
                 self.request.user.member = member
 
         context = super().get_context_data(**kwargs)
-
-        context['ads'] = []
-        ads = Advertisement.objects.all()
-        for ad in ads:
-            images = Images.objects.filter(advertisement=ad.id)
-            if len(images) != 0:
-                image = images[0]
-            else:
-                image = ''
-            context['ads'].append({'name': ad.title, 'info': ad.description, 'id': ad.id, 'image': image})
+        context['cats'] = Category.objects.filter(level=1)
 
         return context
 
@@ -223,31 +214,60 @@ class AdvertisementEditView(UpdateView):
 
 
 def search(request):
-    category = request.POST['category']
-    city = request.POST['city']
-    price = request.POST['price']
-    is_urgent = request.POST['is_urgent']
-    is_image = request.POST['is_image']
+    category1 = request.GET.get('select1', None)
+    category2 = request.GET.get('select2', None)
+    category3 = request.GET.get('category', None)
+
+    state = request.GET.get('state', None)
+    city = request.GET.get('city', None)
+
+    price_low = request.GET.get('price_low', None)
+    price_high = request.GET.get('price_high', None)
+
+    is_urgent = request.GET.get('is_urgent', None)
+    is_image = request.GET.get('is_image', None)
 
     ads = Advertisement.objects.all()
-    if city:
-        ads = ads.filter(city=city)
+    if state:
+        ads = ads.filter(state=state.strip())
+    if city and city.strip():  # in some situation, the not-selected-city was sent as a few space characters
+        ads = ads.filter(city=city.strip())
 
-    if price:
-        ads = ads.filter(price=price)
+    if price_low and price_high:
+        ads = ads.filter(Q(price__gte=int(price_low)) & Q(price__lte=int(price_high)))
+    elif price_low:
+        ads = ads.filter(price__gte=int(price_low))
+    elif price_high:
+        ads = ads.filter(price__lte=int(price_high))
 
     if is_urgent:
-        ads = ads.filter(is_urgent=is_urgent)
-
-    if category:
-        ads = ads.filter(category=category)
+        ads = ads.filter(is_urgent=True)
+    if category3:
+        ads = ads.filter(category=category3)
+    elif category2:
+        ads = ads.filter(category__parent=category2)
+    elif category1:
+        ads = ads.filter(category__parent__parent=category1)
 
     final_ids = []
     for ad in ads:
-        if (len(ad.images.all()) > 0 and is_image) or (len(ad.images.all()) == 0 and not is_image):
+        if is_image is None or (len(ad.images.all()) > 0 and is_image) or (
+                len(ad.images.all()) == 0 and not is_image):
             final_ids.append(ad.id)
     final_ads = Advertisement.objects.filter(id__in=final_ids)
-    return HttpResponse(render_to_string('ads_list.html', {'ads': final_ads}))
+
+    context = dict()
+    context['cats'] = Category.objects.filter(level=1)
+    context['ads'] = []
+    for ad in final_ads:
+        images = Images.objects.filter(advertisement=ad.id)
+        if len(images) != 0:
+            image = images[0]
+        else:
+            image = ''
+        context['ads'].append({'name': ad.title, 'info': ad.description, 'id': ad.id, 'image': image})
+
+    return HttpResponse(render_to_string('ads_list.html', context=context))
 
 
 class CategoryDropdownView(View):

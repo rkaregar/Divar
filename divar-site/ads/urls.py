@@ -13,5 +13,5 @@ urlpatterns = [
     path('report/<int:id>/', ReportCreationView.as_view(), name='report_ad'),
     path('edit/<int:id>/', AdvertisementEditView.as_view(), name='edit_ad'),
     path('dropdown/', CategoryDropdownView.as_view(), name='dropdown'),
-    path('search/', search, name='search')
+    path('search/', search, name='search'),
 ]
