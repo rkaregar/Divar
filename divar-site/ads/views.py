@@ -214,6 +214,8 @@ class AdvertisementEditView(UpdateView):
 
 
 def search(request):
+    title = request.GET.get('title', None)
+
     category1 = request.GET.get('select1', None)
     category2 = request.GET.get('select2', None)
     category3 = request.GET.get('category', None)
@@ -228,6 +230,9 @@ def search(request):
     is_image = request.GET.get('is_image', None)
 
     ads = Advertisement.objects.all()
+    if title:
+        ads = ads.filter(title__icontains=title)
+
     if state:
         ads = ads.filter(state=state.strip())
     if city and city.strip():  # in some situation, the not-selected-city was sent as a few space characters
