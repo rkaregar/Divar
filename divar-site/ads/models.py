@@ -51,8 +51,10 @@ class Advertisement(models.Model):
     def top_similar_ads(self, num_of_ads):
         ads = list(Advertisement.objects.filter(~Q(pk=self.pk)))
 
-        ads_scores = sorted(list(zip(ads, list(map(self.ad_similarity, ads)))), key=lambda x: x[1], reverse=True)
+        if len(ads) == 0:
+            return []
 
+        ads_scores = sorted(list(zip(ads, list(map(self.ad_similarity, ads)))), key=lambda x: x[1], reverse=True)
         return list(list(zip(*ads_scores))[0])[:num_of_ads]
 
 
