@@ -229,7 +229,8 @@ def search(request):
     is_urgent = request.GET.get('is_urgent', None)
     is_image = request.GET.get('is_image', None)
 
-    ads = Advertisement.objects.all()
+    ads = Advertisement.objects.filter(is_archived=False)
+
     if title:
         ads = ads.filter(title__icontains=title)
 
