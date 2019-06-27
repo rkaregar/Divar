@@ -204,9 +204,23 @@ class AdvertisementEditView(UpdateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['ad'] = self.ad
+        # print(self.ad)
+        print(len(self.ad.images.all()))
+        context['images'] = self.ad.images.all()
         return context
 
     def form_valid(self, form):
+        if self.request.POST:
+            images = ImagesFormset(self.request.POST, self.request.FILES)
+        else:
+            images = ImagesFormset()
+
+        with transaction.atomic():
+
+            if images.is_valid():
+                images.instance = self.object
+                images.save()
+
         ad = form.save(commit=False)
         ad.user = self.request.user.member
         ad.save()
