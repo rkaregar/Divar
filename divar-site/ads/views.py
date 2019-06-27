@@ -7,8 +7,12 @@ from ads.forms import AdvertisementCreationForm, ImagesFormset, ReportCreation
 from django.shortcuts import get_object_or_404
 from ads.models import Advertisement, Images, ReportAdvertisement, Category
 from django.db import transaction
+from django.db.models import Q
 
 from users.models import Member
+import math
+
+PAGE_SIZE = 6
 
 
 class HomeView(TemplateView):
@@ -214,6 +218,7 @@ class AdvertisementEditView(UpdateView):
 
 
 def search(request):
+    page = request.GET.get('page', None)
     title = request.GET.get('title', None)
 
     category1 = request.GET.get('select1', None)
@@ -236,7 +241,7 @@ def search(request):
 
     if state:
         ads = ads.filter(state=state.strip())
-    if city and city.strip():  # in some situation, the not-selected-city was sent as a few space characters
+    if city and city.strip():  # in some situations, the not-selected-city was sent as a few space characters
         ads = ads.filter(city=city.strip())
 
     if price_low and price_high:
@@ -260,9 +265,17 @@ def search(request):
         if is_image is None or (len(ad.images.all()) > 0 and is_image) or (
                 len(ad.images.all()) == 0 and not is_image):
             final_ids.append(ad.id)
-    final_ads = Advertisement.objects.filter(id__in=final_ids)
+
+    if page:
+        page = int(page)
+        final_ads = Advertisement.objects.filter(id__in=final_ids)[(page - 1) * PAGE_SIZE:page * PAGE_SIZE]
+    else:
+        final_ads = Advertisement.objects.filter(id__in=final_ids)[:PAGE_SIZE]
 
     context = dict()
+
+    # context['max_page'] = int(math.ceil(len(final_ids) / PAGE_SIZE))
+    context['max_page'] = 3
     context['cats'] = Category.objects.filter(level=1)
     context['ads'] = []
     for ad in final_ads:
