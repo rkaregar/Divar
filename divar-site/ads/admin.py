@@ -11,6 +11,7 @@ class ImagesInline(admin.TabularInline):
 class AdvertisementAdmin(admin.ModelAdmin):
     inlines = [ImagesInline]
 
+
 admin.site.register(Advertisement, AdvertisementAdmin)
 admin.site.register(Category)
 admin.site.register(Images)
