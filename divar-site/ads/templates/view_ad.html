@@ -54,7 +54,7 @@
 
                     <tr>
                         <td>قیمت</td>
-                        <td>{{ price }}</td>
+                        <td>{% if price == '-1' %} توافقی {% else %} {{ price }} {% endif %}</td>
                     </tr>
                     <tr>
                         <td>استان</td>

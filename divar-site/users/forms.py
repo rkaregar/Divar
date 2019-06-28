@@ -22,8 +22,6 @@ class MemberCreationForm(UserCreationForm):
         fields = ('username', 'email', 'password1', 'password2', 'phone')
 
     def notify(self, subject, message):
-        print(subject)
-        print(message)
         send_mail(subject, message, from_email="sad@project.com", recipient_list=[self.cleaned_data['email']],
                   fail_silently=True)
 

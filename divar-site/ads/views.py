@@ -27,6 +27,7 @@ class HomeView(TemplateView):
 
         context = super().get_context_data(**kwargs)
         context['cats'] = Category.objects.filter(level=1)
+        context['max_possible_page'] = int(math.ceil(Advertisement.objects.all().count() / PAGE_SIZE))
 
         return context
 
@@ -43,6 +44,9 @@ class AdvertisementCreationView(CreateView):
 
         if self.request.POST:
             data['images'] = ImagesFormset(self.request.POST, self.request.FILES)
+            print('sag')
+            print(self.request.POST)
+            print(self.request.FILES)
         else:
             data['images'] = ImagesFormset()
 
@@ -208,23 +212,9 @@ class AdvertisementEditView(UpdateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['ad'] = self.ad
-        # print(self.ad)
-        print(len(self.ad.images.all()))
-        context['images'] = self.ad.images.all()
         return context
 
     def form_valid(self, form):
-        if self.request.POST:
-            images = ImagesFormset(self.request.POST, self.request.FILES)
-        else:
-            images = ImagesFormset()
-
-        with transaction.atomic():
-
-            if images.is_valid():
-                images.instance = self.object
-                images.save()
-
         ad = form.save(commit=False)
         ad.user = self.request.user.member
         ad.save()
@@ -280,16 +270,19 @@ def search(request):
                 len(ad.images.all()) == 0 and not is_image):
             final_ids.append(ad.id)
 
+    max_page = int(math.ceil(len(final_ids) / PAGE_SIZE))
     if page:
         page = int(page)
+        if page > max_page:
+            page = max_page
         final_ads = Advertisement.objects.filter(id__in=final_ids)[(page - 1) * PAGE_SIZE:page * PAGE_SIZE]
     else:
         final_ads = Advertisement.objects.filter(id__in=final_ids)[:PAGE_SIZE]
 
     context = dict()
 
-    # context['max_page'] = int(math.ceil(len(final_ids) / PAGE_SIZE))
-    context['max_page'] = 3
+    context['max_page'] = int(math.ceil(len(final_ids) / PAGE_SIZE))
+    # context['max_page'] = 3
     context['cats'] = Category.objects.filter(level=1)
     context['ads'] = []
     for ad in final_ads:
