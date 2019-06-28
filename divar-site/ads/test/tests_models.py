@@ -15,8 +15,8 @@ def create_categories():
     Category.objects.create(title='regular_motor', level=3, parent=motorcycle)
 
 
-def create_member(username):
-    user = User.objects.create(username=username)
+def create_member(username, password):
+    user = User.objects.create(username=username, password=password)
     member = Member.objects.create(user=user, phone_number='123456')
 
     return member
