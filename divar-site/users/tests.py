@@ -1,4 +1,3 @@
-from django.test import TestCase
 from selenium import webdriver
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from selenium.webdriver.common.keys import Keys

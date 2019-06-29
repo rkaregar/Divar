@@ -4,6 +4,23 @@
 
 {% block content %}
     <div class="container p-5" dir="rtl">
+        {% if form.errors %}
+            <div class="alert alert-danger alert-dismissible fade show" role="alert" id="form_errors" align="center"
+                 style="margin-top: 20px">
+                <ul>
+                    <strong>خطاهای زیر پیش آمده:</strong>
+                    {{ form.non_field_errors }}
+                    {% for field in form %}
+                        {% if field.errors %}
+                            <li>{{ field.label }}: {{ field.errors|striptags }}</li>{% endif %}
+                    {% endfor %}
+                </ul>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        {% endif %}
+
         <div class="row justify-content-center">
             <div class="col-md-8" align="center">
                 <div class="card" style="background: #E0E0E0; height: 240px; width: 500px;">
@@ -50,20 +67,6 @@
                 </div>
             </div>
         </div>
-        {% if form.errors %}
-            <div class="alert alert-danger alert-dismissible fade show" role="alert" id="form_errors" align="center" style="margin-top: 20px">
-                <ul>
-                    <strong>خطاهای زیر پیش آمده:</strong>
-                    {{ form.non_field_errors }}
-                    {% for field in form %}
-                        {% if field.errors %}
-                            <li>{{ field.label }}: {{ field.errors|striptags }}</li>{% endif %}
-                    {% endfor %}
-                </ul>
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        {% endif %}
     </div>
+    <script src="/static/js/Translator.js"></script>
 {% endblock %}

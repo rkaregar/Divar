@@ -38,7 +38,8 @@
                     </div>
                     <div class="card-footer">
                         <a href="/ads/view/{{ ad.id }}" class="btn btn-primary">توضیحات بیشتر</a>
-                        <a href="{% url 'ads:edit_ad' id=ad.id %}" class="btn btn-info" style="margin-top: 5px">ویرایش</a>
+                        <a href="{% url 'ads:edit_ad' id=ad.id %}" class="btn btn-info"
+                           style="margin-top: 5px">ویرایش</a>
                         <div class="col-md-2"></div>
                         <button id="btn-archive{{ ad.id }}" type="button" name="archive"
                                 {% if ad.is_archived %}class="btn btn-warning btn-archive disabled" {% else %}
@@ -53,11 +54,9 @@
                 </div>
             </div>
 
-            <!-- Modal -->
             <div class="modal fade" id="myModal" role="dialog">
                 <div class="modal-dialog">
 
-                    <!-- Modal content-->
                     <div class="modal-content">
                         <div class="modal-header">
                             <h4 class="modal-title" dir="rtl">حذف آگهی</h4>

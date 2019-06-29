@@ -1,7 +1,5 @@
 from django.test import TestCase
 from ads.models import Advertisement, Category
-from users.models import Member
-from django.contrib.auth.models import User
 
 from users.tests import create_member
 

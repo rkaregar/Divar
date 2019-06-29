@@ -5,13 +5,8 @@ from django.forms import inlineformset_factory
 
 
 class AdvertisementCreationForm(forms.ModelForm):
-    # category1 = forms.CharField(max_length=12)
-    # category2 = forms.CharField(max_length=12)
-    # category3 = forms.CharField(max_length=12)
-
     class Meta:
         model = Advertisement
-        # fields = ('title', 'price', 'description', 'city', 'is_urgent', 'category1', 'category2', 'category3')
         fields = ('title', 'price', 'description', 'state', 'city', 'is_urgent', 'category')
 
     def __init__(self, user, *args, **kwargs):

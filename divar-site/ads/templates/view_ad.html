@@ -3,6 +3,7 @@
 {% block content %}
     <head>
         <link rel="stylesheet" href="/static/css/carousel.css">
+        <title>دیوار</title>
     </head>
     <div class="container" align="right" id="features">
         <div class="row" id="properties">
@@ -94,7 +95,6 @@
 
 
                 <div id="carousel" class="carousel slide" data-ride="carousel">
-                    {#          This is optional, just for aesthetics#}
                     <ol class="carousel-indicators">
                         {% for img in images %}
                             {% if forloop.counter == 1 %}
@@ -102,14 +102,8 @@
                             {% else %}
                                 <li data-target="#carousel" data-slide-to={{ forloop.counter0 }}></li>
                             {% endif %}
-                            {#              <li data-target="#carousel" data-slide-to={{ forloop.counter0 }}></li>#}
                         {% endfor %}
-
-                        {#            <li data-target="#carousel" data-slide-to="0" class="active"></li>#}
-                        {#            <li data-target="#carousel" data-slide-to="1"></li>#}
-                        {#            <li data-target="#carousel" data-slide-to="2"></li>#}
                     </ol>
-
 
                     <div class="carousel-inner" role="listbox">
                         {% if images %}
@@ -146,11 +140,9 @@
             </div>
         </div>
 
-        <!-- Modal -->
         <div class="modal fade" id="myModal" role="dialog">
             <div class="modal-dialog">
 
-                <!-- Modal content-->
                 <div class="modal-content">
                     <div class="modal-header">
                         <h4 class="modal-title" dir="rtl">گزارش آگهی</h4>
@@ -223,29 +215,11 @@
                         </div>
 
                     {% endfor %}
-                    {#                sample carousel item#}
-                    {#                    <div class="item">#}
-                    {#                        <div class="pad15">#}
-                    {#                            <p class="lead">Multi Item Carousel</p>#}
-                    {#                            <p>₹ 1</p>#}
-                    {#                            <p>₹ 6000</p>#}
-                    {#                            <p>50% off</p>#}
-                    {#                        </div>#}
-                    {#                    </div>#}
                 </div>
                 <button class="btn btn-primary leftLst">></button>
                 <button class="btn btn-primary rightLst"><</button>
             </div>
         </div>
-        {#        <div class="row">#}
-        {#            <div class="col-md-12 text-center">#}
-        {#                <br/><br/><br/>#}
-        {#                <hr/>#}
-        {#                <p>Settings</p>#}
-        {#                <p>Change data items for xs,sm,md and lg display items respectively. Ex:data-items="1,3,5,6"</p>#}
-        {#                <p>Change data slide for slides per click Ex:data-slide="1"</p>#}
-        {#            </div>#}
-        {#        </div>#}
     </div>
     <script src="/static/js/relevant_product_carousel.js"></script>
 
