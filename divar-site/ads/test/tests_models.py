@@ -34,7 +34,7 @@ def create_dummy_ads(member):
 class AdvertisementModelTest(TestCase):
     def setUp(self):
         create_categories()
-        self.member = create_member(username='test')
+        self.member = create_member(username='test', password='test')
         self.pride_car = Advertisement.objects.create(title='pride', price=1000, is_urgent=False,
                                                       description='good car',
                                                       state='Tehran', city='Tehran', user=self.member,

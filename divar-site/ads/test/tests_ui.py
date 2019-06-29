@@ -9,7 +9,7 @@ from selenium.webdriver.support.select import Select
 
 from ads.test.tests_models import create_categories, create_dummy_ads
 from users.tests import create_member, login
-from ads.models import Advertisement, Category
+from ads.models import Advertisement, Category, ReportAdvertisement
 
 import time
 
@@ -90,28 +90,28 @@ class SearchLiveServerTestAds(AdsStaticLiveServerTestCase):
         assert 'truck' not in self.selenium.page_source
 
     def test_search_category(self):
-            create_dummy_ads(self.member)
-            self.selenium.get(self.live_server_url)
+        create_dummy_ads(self.member)
+        self.selenium.get(self.live_server_url)
 
-            select1 = Select(self.selenium.find_element_by_id("select1"))
-            select2 = Select(self.selenium.find_element_by_id("select2"))
-            category = Select(self.selenium.find_element_by_id("category"))
+        select1 = Select(self.selenium.find_element_by_id("select1"))
+        select2 = Select(self.selenium.find_element_by_id("select2"))
+        category = Select(self.selenium.find_element_by_id("category"))
 
-            select1.select_by_index(1)
-            time.sleep(1)
-            select2.select_by_index(1)
-            time.sleep(1)
-            category.select_by_index(2)
+        select1.select_by_index(1)
+        time.sleep(1)
+        select2.select_by_index(1)
+        time.sleep(1)
+        category.select_by_index(2)
 
-            search = self.selenium.find_element_by_id('search')
-            search.send_keys(Keys.RETURN)
+        search = self.selenium.find_element_by_id('search')
+        search.send_keys(Keys.RETURN)
 
-            time.sleep(1)
+        time.sleep(1)
 
-            # only truck is in this category
-            assert 'truck' in self.selenium.page_source
-            assert 'pride' not in self.selenium.page_source
-            assert 'peugeot' not in self.selenium.page_source
+        # only truck is in this category
+        assert 'truck' in self.selenium.page_source
+        assert 'pride' not in self.selenium.page_source
+        assert 'peugeot' not in self.selenium.page_source
 
     def test_no_results(self):
         create_dummy_ads(self.member)
@@ -221,6 +221,35 @@ class AdLiveServerTestAds(AdsStaticLiveServerTestCase):
         self.selenium.find_element_by_link_text('دیوار').click()
 
         assert 'pride' not in self.selenium.page_source
+
+    def test_bookmark(self):
+        self.create_ad_and_move_to_my_ads()
+
+        self.selenium.find_element_by_css_selector(
+            '#page-content-wrapper > div:nth-child(1) > div:nth-child(1) > div > div.card-footer > a.btn.btn-primary').click()
+        self.selenium.find_element_by_css_selector('#bookmark').click()
+
+        self.selenium.find_element_by_link_text('پروفایل').click()
+        self.selenium.find_element_by_link_text('آگهی‌های نشان‌شده').click()
+
+        assert 'pride' in self.selenium.page_source
+
+    def test_report_ad(self):
+        self.create_ad_and_move_to_my_ads()
+
+        self.selenium.find_element_by_css_selector(
+            '#page-content-wrapper > div:nth-child(1) > div:nth-child(1) > div > div.card-footer > a.btn.btn-primary').click()
+        report = self.selenium.find_element_by_css_selector('body > div:nth-child(2) > button')
+        report.send_keys(Keys.RETURN)
+        time.sleep(1)
+
+        report = self.selenium.find_element_by_css_selector('#report-form > div > textarea')
+        report.send_keys('inappropriate ad')
+        submit = self.selenium.find_element_by_css_selector(
+            '#myModal > div > div > div.modal-footer > button.btn.btn-success')
+        submit.send_keys(Keys.RETURN)
+
+        self.assertEqual(ReportAdvertisement.objects.all().first().reason, 'inappropriate ad')
 
     def test_ad_detail(self):
         Advertisement.objects.create(title='pride', price=500, is_urgent=True, description='good car',
