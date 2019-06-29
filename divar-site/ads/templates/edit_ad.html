@@ -96,7 +96,7 @@
                                     <label for="is_urgent" class=" col-form-label">فوری</label>
                                     <div class="col-sm-1">
                                         <div class="checkbox">
-                                            <input type="checkbox" name="is_urgent" {% if ad.is_urgent %}
+                                            <input type="checkbox" name="is_urgent" id="is_urgent" {% if ad.is_urgent %}
                                                    checked {% endif %}>
                                         </div>
                                     </div>
@@ -104,7 +104,7 @@
 
                                 <div class="form-group row mb-0">
                                     <div class="col-md-8 offset-md-4">
-                                        <button type="submit" class="btn btn-outline-primary">
+                                        <button type="submit" class="btn btn-outline-primary" name="submit" id="submit">
                                             ویرایش
                                         </button>
                                     </div>

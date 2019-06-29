@@ -18,20 +18,7 @@ class AdvertisementCreationForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.user = user
 
-    def clean_price(self):
-        if self.cleaned_data['price'] == -1:
-            return 'On Agreement'
-        else:
-            return str(self.cleaned_data['price'])
-
     def save(self, commit=True):
-        # if self.cleaned_data['category3'] != '':
-        #     category = get_object_or_404(Category, level=3, title=self.cleaned_data['category3'])
-        # elif self.cleaned_data['category2'] != '':
-        #     category = get_object_or_404(Category, level=2, title=self.cleaned_data['category2'])
-        # else:
-        #     category = get_object_or_404(Category, level=1, title=self.cleaned_data['category1'])
-
         if commit:
             self.instance = Advertisement.objects.create(title=self.cleaned_data['title'],
                                                          price=self.cleaned_data['price'],

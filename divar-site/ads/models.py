@@ -4,12 +4,10 @@ from django.db.models import Q
 from users.models import Member
 from django.db.models.deletion import CASCADE
 
-# Create your models here.
-
 
 class Advertisement(models.Model):
     title = models.CharField(max_length=20)
-    price = models.CharField(max_length=10)
+    price = models.IntegerField()
     is_urgent = models.BooleanField(default=False)
     description = models.CharField(max_length=200)
     is_archived = models.BooleanField(default=False)

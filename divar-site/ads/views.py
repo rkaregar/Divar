@@ -27,7 +27,7 @@ class HomeView(TemplateView):
 
         context = super().get_context_data(**kwargs)
         context['cats'] = Category.objects.filter(level=1)
-        context['max_possible_page'] = int(math.ceil(Advertisement.objects.all().count() / PAGE_SIZE))
+        context['max_possible_page'] = max(1, int(math.ceil(Advertisement.objects.all().count() / PAGE_SIZE)))
 
         return context
 
@@ -44,7 +44,6 @@ class AdvertisementCreationView(CreateView):
 
         if self.request.POST:
             data['images'] = ImagesFormset(self.request.POST, self.request.FILES)
-            print('sag')
             print(self.request.POST)
             print(self.request.FILES)
         else:
@@ -270,7 +269,7 @@ def search(request):
                 len(ad.images.all()) == 0 and not is_image):
             final_ids.append(ad.id)
 
-    max_page = int(math.ceil(len(final_ids) / PAGE_SIZE))
+    max_page = max(1, int(math.ceil(len(final_ids) / PAGE_SIZE)))
     if page:
         page = int(page)
         if page > max_page:
@@ -281,8 +280,7 @@ def search(request):
 
     context = dict()
 
-    context['max_page'] = int(math.ceil(len(final_ids) / PAGE_SIZE))
-    # context['max_page'] = 3
+    context['max_page'] = max_page
     context['cats'] = Category.objects.filter(level=1)
     context['ads'] = []
     for ad in final_ads:

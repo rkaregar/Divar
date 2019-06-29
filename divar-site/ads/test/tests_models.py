@@ -3,6 +3,8 @@ from ads.models import Advertisement, Category
 from users.models import Member
 from django.contrib.auth.models import User
 
+from users.tests import create_member
+
 
 def create_categories():
     vehicle = Category.objects.create(title='vehicle', level=1)
@@ -15,11 +17,18 @@ def create_categories():
     Category.objects.create(title='regular_motor', level=3, parent=motorcycle)
 
 
-def create_member(username, password):
-    user = User.objects.create(username=username, password=password)
-    member = Member.objects.create(user=user, phone_number='123456')
+def create_dummy_ads(member):
+    Advertisement.objects.create(title='pride', price=500, is_urgent=True, description='good car',
+                                 state='Tehran', city='Tehran', user=member,
+                                 category=Category.objects.get(title='sport_car'))
 
-    return member
+    Advertisement.objects.create(title='peugeot', price=1000, is_urgent=False, description='good peugeot',
+                                 state='Tehran', city='Tehran', user=member,
+                                 category=Category.objects.get(title='sport_car'))
+
+    Advertisement.objects.create(title='truck', price=1500, is_urgent=False, description='ok truck',
+                                 state='Tehran', city='Varamin', user=member,
+                                 category=Category.objects.get(title='heavy_car'))
 
 
 class AdvertisementModelTest(TestCase):
@@ -46,7 +55,7 @@ class AdvertisementModelTest(TestCase):
                                                state='Tehran', city='Tehran', user=self.member,
                                                category=Category.objects.get(title='sport_car'))
 
-        truck = Advertisement.objects.create(title='truck', price=1500, is_urgent=False, description='ok car',
+        truck = Advertisement.objects.create(title='truck', price=1500, is_urgent=False, description='ok truck',
                                              state='Tehran', city='Varamin', user=self.member,
                                              category=Category.objects.get(title='heavy_car'))
 
