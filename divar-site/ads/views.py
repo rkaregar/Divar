@@ -192,7 +192,8 @@ class ReportCreationView(CreateView):
     form_class = ReportCreation
 
     def get_success_url(self):
-        return reverse('ads:view_advertisement', args=self.request.POST['id'])
+        print(self.request.POST['id'])
+        return reverse('ads:view_advertisement', args=[self.request.POST['id']])
 
 
 class AdvertisementEditView(UpdateView):
